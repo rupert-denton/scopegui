@@ -2,6 +2,8 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import useScopeAndSequence from "../hooks/useScopeAndSequence";
 import VersionSelector from "../components/VersionSelector";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 
 export default function MainLayout() {
   const { scopeAndSequence, saveScopeAndSequence, unloadScopeAndSequence } =
@@ -10,12 +12,17 @@ export default function MainLayout() {
   return (
     <MainLayoutContainer>
       <Header>
-        <h1>Scope And Sequence Editor</h1>
+        <PageTitle>Scope And Sequence Editor</PageTitle>
         {scopeAndSequence && (
           <StatusContainer>
             <VersionSelector />
-            <button onClick={saveScopeAndSequence}>Save</button>
-            <button onClick={unloadScopeAndSequence}>Unload</button>
+            <Button onClick={saveScopeAndSequence}>
+              <Download size={16} />
+              Save
+            </Button>
+            <Button variant="destructive" onClick={unloadScopeAndSequence}>
+              Unload
+            </Button>
           </StatusContainer>
         )}
       </Header>
@@ -38,6 +45,11 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const PageTitle = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 600;
 `;
 
 const StatusContainer = styled.div`
