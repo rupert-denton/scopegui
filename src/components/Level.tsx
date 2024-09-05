@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { ScopeAndSequenceLevel } from "../model";
 
 interface LevelProps {
@@ -5,10 +6,19 @@ interface LevelProps {
 }
 export default function Level({ levelData }: LevelProps) {
   return (
-    <div>
+    <LevelContainer>
       <p>
         {levelData.level} - {levelData.levelInfo}
       </p>
-    </div>
+    </LevelContainer>
   );
 }
+
+const LevelContainer = styled.div`
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
