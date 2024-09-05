@@ -15,7 +15,8 @@ export default function VersionSelector() {
     if (version) {
       setUpdatedVersion(semver.inc(version, releaseType));
     }
-  }, [version, releaseType, setUpdatedVersion]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [version, releaseType]);
 
   if (!version || !updatedVersion) return <p>Version missing</p>;
   return (
