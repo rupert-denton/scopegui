@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { ScopeAndSequenceLevel } from "../model";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { DotsSixVertical } from "@phosphor-icons/react";
+import { CaretRight, DotsSixVertical } from "@phosphor-icons/react";
+import { useState } from "react";
 
 interface LevelProps {
   levelData: ScopeAndSequenceLevel;
 }
 export default function Level({ levelData }: LevelProps) {
+  const [open, setOpen] = useState(false);
   const {
     attributes,
     listeners,
@@ -25,10 +27,23 @@ export default function Level({ levelData }: LevelProps) {
 
   return (
     <LevelContainer ref={setNodeRef} style={style}>
-      <DragHandle size={20} {...attributes} {...listeners} />
-      <p>
-        {levelData.level} - {levelData.levelInfo} ({levelData.id})
-      </p>
+      <ControlsContainer>
+        <DragHandle size={20} {...attributes} {...listeners} />
+        <Chevron
+          weight="bold"
+          style={{ transform: open ? "rotate(90deg)" : undefined }}
+          onClick={() => setOpen(!open)}
+        />
+      </ControlsContainer>
+      <LevelHeader>
+        Level {levelData.level} - {levelData.levelInfo}{" "}
+        <em>(Level ID: {levelData.id})</em>
+      </LevelHeader>
+      {open && (
+        <LevelContent>
+          <p>level content</p>
+        </LevelContent>
+      )}
     </LevelContainer>
   );
 }
@@ -39,7 +54,8 @@ const LevelContainer = styled.div`
   padding: 0.5rem;
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  position: relative;
 `;
 
 const DragHandle = styled(DotsSixVertical)`
@@ -49,4 +65,32 @@ const DragHandle = styled(DotsSixVertical)`
   &:active {
     cursor: grabbing;
   }
+`;
+
+const ControlsContainer = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0.6rem;
+`;
+
+const Chevron = styled(CaretRight)`
+  cursor: pointer;
+  margin-right: 10px;
+
+  will-change: transform;
+  transition: transform 0.2s ease-in-out;
+`;
+
+const LevelHeader = styled.div`
+  flex: 1;
+  margin-left: 4rem;
+`;
+
+const LevelContent = styled.div`
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;
