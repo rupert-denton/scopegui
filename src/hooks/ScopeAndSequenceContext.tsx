@@ -49,6 +49,7 @@ export function ScopeAndSequenceProvider({
       const result = reader.result as string;
       const data = JSON.parse(result);
       setScopeAndSequence(data);
+      setUpdatedScopeAndSequence(data);
     };
     reader.readAsText(file);
   }
@@ -68,7 +69,7 @@ export function ScopeAndSequenceProvider({
   }
 
   function setUpdatedVersion(version: string | null) {
-    if (!scopeAndSequence) {
+    if (!scopeAndSequence || !updatedScopeAndSequence) {
       console.error("No scope and sequence loaded");
       return;
     }
@@ -85,7 +86,7 @@ export function ScopeAndSequenceProvider({
       newVersion = scopeAndSequence.version;
     }
     setUpdatedScopeAndSequence({
-      ...scopeAndSequence,
+      ...updatedScopeAndSequence,
       version: newVersion,
     });
   }
