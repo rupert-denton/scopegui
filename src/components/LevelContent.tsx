@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { gameDataFields, ScopeAndSequenceLevel } from "../model";
 import GameData from "./GameData";
+import LevelInfo from "./LevelInfo";
 
 interface LevelContentProps {
   levelData: ScopeAndSequenceLevel;
@@ -29,7 +30,7 @@ export default function LevelContent({ levelData }: LevelContentProps) {
               {gameDataFields.includes(key) ? (
                 <GameData fieldName={key} value={value} />
               ) : (
-                value
+                <LevelInfo value={value} />
               )}
             </TableCell>
           </TableRow>
