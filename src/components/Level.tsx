@@ -4,6 +4,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { CaretRight, DotsSixVertical } from "@phosphor-icons/react";
 import { useState } from "react";
+import LevelContent from "./LevelContent";
 
 interface LevelProps {
   levelData: ScopeAndSequenceLevel;
@@ -39,11 +40,7 @@ export default function Level({ levelData }: LevelProps) {
         Level {levelData.level} - {levelData.levelInfo}{" "}
         <em>(Level ID: {levelData.id})</em>
       </LevelHeader>
-      {open && (
-        <LevelContent>
-          <p>level content</p>
-        </LevelContent>
-      )}
+      {open && <LevelContent levelData={levelData} />}
     </LevelContainer>
   );
 }
@@ -85,12 +82,4 @@ const Chevron = styled(CaretRight)`
 const LevelHeader = styled.div`
   flex: 1;
   margin-left: 4rem;
-`;
-
-const LevelContent = styled.div`
-  padding: 0.5rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 `;
