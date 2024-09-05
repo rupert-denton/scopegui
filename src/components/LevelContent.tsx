@@ -17,17 +17,17 @@ export default function LevelContent({ levelData }: LevelContentProps) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="font-bold">Key</TableHead>
+          <TableHead>Key</TableHead>
           <TableHead>Value</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {Object.entries(levelData).map(([key, value]) => (
           <TableRow key={key}>
-            <TableCell>{key}</TableCell>
+            <TableCell className="font-medium">{key}</TableCell>
             <TableCell>
               {gameDataFields.includes(key) ? (
-                <GameData value={value} />
+                <GameData fieldName={key} value={value} />
               ) : (
                 value
               )}
