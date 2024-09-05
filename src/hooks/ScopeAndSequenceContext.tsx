@@ -74,6 +74,9 @@ export function ScopeAndSequenceProvider({
       ? `scopeAndSequence-${version}.json`
       : "scopeAndSequence-updated.json";
     a.click();
+
+    // Start working on the next version
+    setScopeAndSequence(updatedScopeAndSequence);
   }
 
   function setUpdatedVersion(version: string | null) {
