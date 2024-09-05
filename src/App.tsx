@@ -2,17 +2,22 @@ import FileSelector from "./components/FileSelector";
 import useScopeAndSequence from "./hooks/useScopeAndSequence";
 
 export default function App() {
-  const { scopeAndSequence, unloadScopeAndSequence } = useScopeAndSequence();
+  const { scopeAndSequence, saveScopeAndSequence, unloadScopeAndSequence } =
+    useScopeAndSequence();
   return (
     <>
-      <h1>Scope And Sequence GUI</h1>
+      <h1>Scope And Sequence Editor</h1>
       {scopeAndSequence ? (
         <>
-          <div>Scope and Sequence loaded</div>
+          <p>Scope and Sequence loaded</p>
+          <button onClick={saveScopeAndSequence}>Save</button>
           <button onClick={unloadScopeAndSequence}>Unload</button>
         </>
       ) : (
-        <FileSelector />
+        <>
+          <p>No scope and sequence loaded.</p>
+          <FileSelector />
+        </>
       )}
     </>
   );

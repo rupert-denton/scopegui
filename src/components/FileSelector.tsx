@@ -10,10 +10,5 @@ export default function FileSelector() {
     }
   }
 
-  return (
-    <div>
-      <h2>Load Scope and Sequence</h2>
-      <input type="file" onChange={handleFileChange} />
-    </div>
-  );
+  return <input type="file" onChange={handleFileChange} />;
 }
