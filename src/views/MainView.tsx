@@ -1,4 +1,6 @@
+import styled from "styled-components";
 import FileSelector from "../components/FileSelector";
+import Level from "../components/Level";
 import useScopeAndSequence from "../hooks/useScopeAndSequence";
 export default function MainView() {
   const { scopeAndSequence } = useScopeAndSequence();
@@ -13,12 +15,18 @@ export default function MainView() {
   }
 
   return (
-    <ul>
-      {scopeAndSequence.data.map((item) => (
-        <li key={item.id}>
-          {item.level} - {item.levelInfo}
-        </li>
+    <LevelList>
+      {scopeAndSequence.data.map((levelData) => (
+        <Level key={levelData.id} levelData={levelData} />
       ))}
-    </ul>
+    </LevelList>
   );
 }
+
+const LevelList = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  gap: 0.1rem;
+  width: 100%;
+`;
