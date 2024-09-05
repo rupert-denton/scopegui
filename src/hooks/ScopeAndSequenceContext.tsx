@@ -1,14 +1,17 @@
 import { createContext, useState } from "react";
 import { ScopeAndSequence } from "../model";
 import semver from "semver";
+import { getFromLocalStorage, saveToLocalStorage } from "../utils";
 
 interface ScopeAndSequenceContextType {
   scopeAndSequence: ScopeAndSequence | null;
+  updatedScopeAndSequence: ScopeAndSequence | null;
   loadScopeAndSequence: (file: File) => void;
   saveScopeAndSequence: () => void;
   unloadScopeAndSequence: () => void;
-  updatedVersion: string | null;
+
   setUpdatedVersion: (version: string | null) => void;
+
   selectedLevel: number;
   setSelectedLevel: (level: number) => void;
 }
@@ -22,28 +25,23 @@ interface ScopeAndSequenceProviderProps {
 export function ScopeAndSequenceProvider({
   children,
 }: ScopeAndSequenceProviderProps) {
-  let localStorageItem: ScopeAndSequence | null = null;
-  try {
-    const storedItem = localStorage.getItem("scopeAndSequence");
-    localStorageItem = storedItem ? JSON.parse(storedItem) : null;
-  } catch (error) {
-    console.error("Error parsing scope and sequence from localStorage:", error);
-  }
   const [scopeAndSequence, _setScopeAndSequence] =
-    useState<ScopeAndSequence | null>(localStorageItem);
+    useState<ScopeAndSequence | null>(getFromLocalStorage("scopeAndSequence"));
+  function setScopeAndSequence(value: ScopeAndSequence | null) {
+    saveToLocalStorage("scopeAndSequence", value);
+    _setScopeAndSequence(value);
+  }
 
-  const [updatedVersion, _setUpdatedVersion] = useState<string | null>(null);
+  const [updatedScopeAndSequence, _setUpdatedScopeAndSequence] =
+    useState<ScopeAndSequence | null>(
+      getFromLocalStorage("updatedScopeAndSequence")
+    );
+  function setUpdatedScopeAndSequence(value: ScopeAndSequence | null) {
+    saveToLocalStorage("updatedScopeAndSequence", value);
+    _setUpdatedScopeAndSequence(value);
+  }
 
   const [selectedLevel, setSelectedLevel] = useState(0);
-
-  function setScopeAndSequence(data: ScopeAndSequence | null) {
-    if (data) {
-      localStorage.setItem("scopeAndSequence", JSON.stringify(data));
-    } else {
-      localStorage.removeItem("scopeAndSequence");
-    }
-    _setScopeAndSequence(data);
-  }
 
   function loadScopeAndSequence(file: File) {
     const reader = new FileReader();
@@ -60,12 +58,6 @@ export function ScopeAndSequenceProvider({
   }
 
   function saveScopeAndSequence() {
-    const updatedScopeAndSequence = {
-      ...scopeAndSequence,
-    };
-    if (updatedVersion) {
-      updatedScopeAndSequence.version = updatedVersion;
-    }
     const data = JSON.stringify(updatedScopeAndSequence, null, 2);
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -76,29 +68,36 @@ export function ScopeAndSequenceProvider({
   }
 
   function setUpdatedVersion(version: string | null) {
-    if (!version) {
-      _setUpdatedVersion(null);
+    if (!scopeAndSequence) {
+      console.error("No scope and sequence loaded");
       return;
     }
+
+    let newVersion: string;
     if (
-      scopeAndSequence &&
+      version &&
       semver.valid(version) &&
       semver.lt(scopeAndSequence.version, version)
     ) {
-      _setUpdatedVersion(version);
+      newVersion = version;
     } else {
-      console.error("Invalid version");
+      // Reset to original if supplied version is invalid
+      newVersion = scopeAndSequence.version;
     }
+    setUpdatedScopeAndSequence({
+      ...scopeAndSequence,
+      version: newVersion,
+    });
   }
 
   return (
     <ScopeAndSequenceContext.Provider
       value={{
         scopeAndSequence,
+        updatedScopeAndSequence,
         loadScopeAndSequence,
         saveScopeAndSequence,
         unloadScopeAndSequence,
-        updatedVersion,
         setUpdatedVersion,
         selectedLevel,
         setSelectedLevel,

@@ -3,9 +3,10 @@ import semver from "semver";
 import useScopeAndSequence from "../hooks/useScopeAndSequence";
 
 export default function VersionSelector() {
-  const { scopeAndSequence, updatedVersion, setUpdatedVersion } =
+  const { scopeAndSequence, updatedScopeAndSequence, setUpdatedVersion } =
     useScopeAndSequence();
   const version = scopeAndSequence?.version;
+  const updatedVersion = updatedScopeAndSequence?.version;
   const [releaseType, setReleaseType] = useState<"major" | "minor" | "patch">(
     "patch"
   );
