@@ -30,7 +30,7 @@ export default function LevelContent({ levelData }: LevelContentProps) {
               {gameDataFields.includes(key) ? (
                 <GameData fieldName={key} value={value} />
               ) : (
-                <LevelInfo value={value} />
+                <LevelInfo fieldName={key} value={value} />
               )}
             </TableCell>
           </TableRow>

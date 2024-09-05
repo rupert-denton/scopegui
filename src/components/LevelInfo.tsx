@@ -1,10 +1,20 @@
 import styled from "styled-components";
 import GameDataItem from "./GameDataItem";
+import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Checkbox } from "./ui/checkbox";
 
 interface LevelInfoProps {
+  fieldName: string;
   value: number | string | string[] | boolean;
 }
-export default function LevelInfo({ value }: LevelInfoProps) {
+export default function LevelInfo({ fieldName, value }: LevelInfoProps) {
   if (Array.isArray(value)) {
     return (
       <LevelInfoContainer>
@@ -13,10 +23,24 @@ export default function LevelInfo({ value }: LevelInfoProps) {
         ))}
       </LevelInfoContainer>
     );
+  } else if (fieldName === "id") {
+    return <p>{value}</p>;
+  } else if (fieldName === "focus") {
+    return (
+      <Select value={value as string}>
+        <SelectTrigger>
+          <SelectValue placeholder={value as string} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="phonics">phonics</SelectItem>
+          <SelectItem value="morphology">morphology</SelectItem>
+        </SelectContent>
+      </Select>
+    );
   } else if (typeof value === "string" || typeof value === "number") {
-    return value;
+    return <Input value={value} />;
   } else if (typeof value === "boolean") {
-    return value ? "Yes" : "No";
+    return <Checkbox checked={value} />;
   }
 }
 
