@@ -1,11 +1,14 @@
 import { createContext, useState } from "react";
 import { ScopeAndSequence } from "../model";
+import semver from "semver";
 
 interface ScopeAndSequenceContextType {
   scopeAndSequence: ScopeAndSequence | null;
   loadScopeAndSequence: (file: File) => void;
   saveScopeAndSequence: () => void;
   unloadScopeAndSequence: () => void;
+  updatedVersion: string | null;
+  setUpdatedVersion: (version: string | null) => void;
   selectedLevel: number;
   setSelectedLevel: (level: number) => void;
 }
@@ -28,6 +31,8 @@ export function ScopeAndSequenceProvider({
   }
   const [scopeAndSequence, _setScopeAndSequence] =
     useState<ScopeAndSequence | null>(localStorageItem);
+
+  const [updatedVersion, _setUpdatedVersion] = useState<string | null>(null);
 
   const [selectedLevel, setSelectedLevel] = useState(0);
 
@@ -55,13 +60,35 @@ export function ScopeAndSequenceProvider({
   }
 
   function saveScopeAndSequence() {
-    const data = JSON.stringify(scopeAndSequence, null, 2);
+    const updatedScopeAndSequence = {
+      ...scopeAndSequence,
+    };
+    if (updatedVersion) {
+      updatedScopeAndSequence.version = updatedVersion;
+    }
+    const data = JSON.stringify(updatedScopeAndSequence, null, 2);
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "scopeAndSequence.json";
     a.click();
+  }
+
+  function setUpdatedVersion(version: string | null) {
+    if (!version) {
+      _setUpdatedVersion(null);
+      return;
+    }
+    if (
+      scopeAndSequence &&
+      semver.valid(version) &&
+      semver.lt(scopeAndSequence.version, version)
+    ) {
+      _setUpdatedVersion(version);
+    } else {
+      console.error("Invalid version");
+    }
   }
 
   return (
@@ -71,6 +98,8 @@ export function ScopeAndSequenceProvider({
         loadScopeAndSequence,
         saveScopeAndSequence,
         unloadScopeAndSequence,
+        updatedVersion,
+        setUpdatedVersion,
         selectedLevel,
         setSelectedLevel,
       }}
