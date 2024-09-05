@@ -4,6 +4,8 @@ import { ScopeAndSequence } from "../model";
 interface ScopeAndSequenceContextType {
   scopeAndSequence: ScopeAndSequence | null;
   loadScopeAndSequence: (file: File) => void;
+  saveScopeAndSequence: () => void;
+  unloadScopeAndSequence: () => void;
   selectedLevel: number;
   setSelectedLevel: (level: number) => void;
 }
@@ -31,11 +33,27 @@ export function ScopeAndSequenceProvider({
     reader.readAsText(file);
   }
 
+  function unloadScopeAndSequence() {
+    setScopeAndSequence(null);
+  }
+
+  function saveScopeAndSequence() {
+    const data = JSON.stringify(scopeAndSequence, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "scopeAndSequence.json";
+    a.click();
+  }
+
   return (
     <ScopeAndSequenceContext.Provider
       value={{
         scopeAndSequence,
         loadScopeAndSequence,
+        saveScopeAndSequence,
+        unloadScopeAndSequence,
         selectedLevel,
         setSelectedLevel,
       }}
