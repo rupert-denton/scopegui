@@ -1,4 +1,4 @@
-import { ScopeAndSequence } from "./model";
+import { ScopeAndSequence, ScopeAndSequenceLevel } from "./model";
 
 export function getFromLocalStorage(key: string): ScopeAndSequence | null {
   let localStorageItem: ScopeAndSequence | null = null;
@@ -24,4 +24,8 @@ export function saveToLocalStorage(
   } catch (error) {
     console.error("Error saving value to localStorage:", error);
   }
+}
+
+export function assignLevelNumbers(data: ScopeAndSequenceLevel[]) {
+  return data.map((level, index) => ({ ...level, level: index + 1 }));
 }

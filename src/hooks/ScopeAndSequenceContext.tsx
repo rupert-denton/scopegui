@@ -1,7 +1,11 @@
 import { createContext, useState } from "react";
-import { ScopeAndSequence } from "../model";
+import { ScopeAndSequence, ScopeAndSequenceLevel } from "../model";
 import semver from "semver";
-import { getFromLocalStorage, saveToLocalStorage } from "../utils";
+import {
+  getFromLocalStorage,
+  saveToLocalStorage,
+  assignLevelNumbers,
+} from "../utils";
 
 interface ScopeAndSequenceContextType {
   scopeAndSequence: ScopeAndSequence | null;
@@ -11,6 +15,7 @@ interface ScopeAndSequenceContextType {
   unloadScopeAndSequence: () => void;
 
   setUpdatedVersion: (version: string | null) => void;
+  setUpdatedData: (data: ScopeAndSequenceLevel[]) => void;
 
   selectedLevel: number;
   setSelectedLevel: (level: number) => void;
@@ -91,6 +96,18 @@ export function ScopeAndSequenceProvider({
     });
   }
 
+  function setUpdatedData(data: ScopeAndSequenceLevel[]) {
+    if (!updatedScopeAndSequence) {
+      console.error("No scope and sequence loaded");
+      return;
+    }
+
+    setUpdatedScopeAndSequence({
+      ...updatedScopeAndSequence,
+      data: assignLevelNumbers(data),
+    });
+  }
+
   return (
     <ScopeAndSequenceContext.Provider
       value={{
@@ -100,6 +117,7 @@ export function ScopeAndSequenceProvider({
         saveScopeAndSequence,
         unloadScopeAndSequence,
         setUpdatedVersion,
+        setUpdatedData,
         selectedLevel,
         setSelectedLevel,
       }}
