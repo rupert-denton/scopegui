@@ -51,7 +51,7 @@ export default function CodeSheetContents({
                   />
                   <X
                     size={16}
-                    className="absolute right-2 top-1/2 cursor-pointer"
+                    className="absolute right-2 top-5 cursor-pointer"
                     onClick={() => {
                       setUpdatedCode({
                         ...updatedCode,
