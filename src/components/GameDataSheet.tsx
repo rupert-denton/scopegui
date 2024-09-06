@@ -17,6 +17,7 @@ import MorphemeSheetContents from "./SheetContents/MorphemeSheetContents";
 import WordItemSheetContents from "./SheetContents/WordItemSheetContents";
 import SheetContentContainer from "./SheetContents/SheetContentContainer";
 import SentenceSheetContents from "./SheetContents/SentenceSheetContents";
+import MorphemeWordSheetContents from "./SheetContents/MorphemeWordSheetContents";
 
 interface GameDataSheetProps {
   levelId: number;
@@ -89,16 +90,6 @@ export default function CodeSheet({
     updateLevel(levelId, newLevel);
   }
 
-  function renderMorphemeWordSheetContents(morphemeWord: MorphemeWord) {
-    return (
-      <SheetContentContainer>
-        <SheetTitle>Morpheme Word</SheetTitle>
-        <SheetDescription>Edit a morpheme word.</SheetDescription>
-        <p>{morphemeWord.word}</p>
-      </SheetContentContainer>
-    );
-  }
-
   function renderSheetContents(item: unknown) {
     switch (fieldName) {
       case "newCode":
@@ -133,7 +124,12 @@ export default function CodeSheet({
 
       case "morphemeWordSets":
         if (!updatedMorphemeWord) setUpdatedMorphemeWord(item as MorphemeWord);
-        return renderMorphemeWordSheetContents(item as MorphemeWord);
+        return (
+          <MorphemeWordSheetContents
+            updatedMorphemeWord={updatedMorphemeWord}
+            setUpdatedMorphemeWord={setUpdatedMorphemeWord}
+          />
+        );
 
       case "sentences":
         if (!updatedSentence) setUpdatedSentence(item as SentenceItem);

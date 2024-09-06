@@ -8,7 +8,7 @@ import { SelectValue } from "@radix-ui/react-select";
 
 interface MorphemeSheetContentsProps {
   updatedMorpheme: Morpheme | null;
-  setUpdatedMorpheme: (morpheme: Morpheme | null) => void;
+  setUpdatedMorpheme: (morpheme: Morpheme) => void;
 }
 export default function MorphemeSheetContents({
   updatedMorpheme,
