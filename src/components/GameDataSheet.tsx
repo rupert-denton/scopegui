@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { Button } from "./ui/button";
 import TrickyWordSheetContents from "./SheetContents/TrickyWordSheetContents";
 import CodeSheetContents from "./SheetContents/CodeSheetContents";
+import MorphemeSheetContents from "./SheetContents/MorphemeSheetContents";
 
 interface GameDataSheetProps {
   levelId: number;
@@ -86,16 +87,6 @@ export default function CodeSheet({
     updateLevel(levelId, newLevel);
   }
 
-  function renderMorphemeSheetContents(morpheme: Morpheme) {
-    return (
-      <SheetContentContainer>
-        <SheetTitle>Morpheme</SheetTitle>
-        <SheetDescription>Edit a morpheme.</SheetDescription>
-        <p>{morpheme.morpheme}</p>
-      </SheetContentContainer>
-    );
-  }
-
   function renderWordSheetContents(word: WordItem) {
     return (
       <SheetContentContainer>
@@ -141,7 +132,12 @@ export default function CodeSheet({
       case "newMorphemes":
       case "cumulativeMorphemes":
         if (!updatedMorpheme) setUpdatedMorpheme(item as Morpheme);
-        return renderMorphemeSheetContents(item as Morpheme);
+        return (
+          <MorphemeSheetContents
+            updatedMorpheme={updatedMorpheme}
+            setUpdatedMorpheme={setUpdatedMorpheme}
+          />
+        );
 
       case "wordSets":
         if (!updatedWord) setUpdatedWord(item as WordItem);
