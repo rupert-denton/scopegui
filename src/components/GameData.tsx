@@ -52,42 +52,78 @@ export default function GameData({ levelId, fieldName, value }: GameDataProps) {
 
   const renderCodeList = (codes: Code[]) =>
     codes.map((code, index) => (
-      <GameDataSheet key={index} levelId={levelId} item={code}>
+      <GameDataSheet
+        key={index}
+        levelId={levelId}
+        fieldName={fieldName}
+        item={code}
+        index={index}
+      >
         <GameDataItem value={code.spelling} />
       </GameDataSheet>
     ));
 
   const renderMorphemeList = (morphemes: Morpheme[]) =>
     morphemes.map((morpheme, index) => (
-      <GameDataSheet key={index} levelId={levelId} item={morpheme}>
+      <GameDataSheet
+        key={index}
+        levelId={levelId}
+        fieldName={fieldName}
+        item={morpheme}
+        index={index}
+      >
         <GameDataItem value={morpheme.morpheme} />
       </GameDataSheet>
     ));
 
   const renderWordItemList = (words: WordItem[]) =>
     words.map((wordItem, index) => (
-      <GameDataSheet key={index} levelId={levelId} item={wordItem}>
+      <GameDataSheet
+        key={index}
+        levelId={levelId}
+        fieldName={fieldName}
+        item={wordItem}
+        index={index}
+      >
         <GameDataItem value={wordItem.word} />
       </GameDataSheet>
     ));
 
   const renderMorphemeWordList = (morphemeWords: MorphemeWord[]) =>
     morphemeWords.map((mw, index) => (
-      <GameDataSheet key={index} levelId={levelId} item={mw}>
+      <GameDataSheet
+        key={index}
+        levelId={levelId}
+        fieldName={fieldName}
+        item={mw}
+        index={index}
+      >
         <GameDataItem value={mw.word} />
       </GameDataSheet>
     ));
 
   const renderSentenceList = (sentences: SentenceItem[]) =>
     sentences.map((sentenceItem, index) => (
-      <GameDataSheet key={index} levelId={levelId} item={sentenceItem}>
+      <GameDataSheet
+        key={index}
+        levelId={levelId}
+        fieldName={fieldName}
+        item={sentenceItem}
+        index={index}
+      >
         <GameDataItem value={sentenceItem.sentence} />
       </GameDataSheet>
     ));
 
   const renderTrickyWords = (words: string[]) =>
     words.map((word, index) => (
-      <GameDataSheet key={index} levelId={levelId} item={word}>
+      <GameDataSheet
+        key={index}
+        levelId={levelId}
+        fieldName={fieldName}
+        item={word}
+        index={index}
+      >
         <GameDataItem value={word} />
       </GameDataSheet>
     ));

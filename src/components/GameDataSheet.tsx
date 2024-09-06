@@ -13,15 +13,21 @@ import useScopeAndSequence from "@/hooks/useScopeAndSequence";
 import styled from "styled-components";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { X } from "lucide-react";
 
 interface GameDataSheetProps {
   levelId: number;
+  fieldName: string;
   item: unknown;
+  index: number;
   children?: React.ReactNode;
 }
 export default function CodeSheet({
   levelId,
+  fieldName,
   item,
+  index,
   children,
 }: GameDataSheetProps) {
   const { updatedScopeAndSequence, updateLevel } = useScopeAndSequence();
@@ -29,37 +35,88 @@ export default function CodeSheet({
     (level) => level.id === levelId
   );
 
-  // Tricky word state
+  const [updatedCode, setUpdatedCode] = useState<Code | null>(null);
+  const [updatedMorpheme, setUpdatedMorpheme] = useState<Morpheme | null>(null);
+  const [updatedWord, setUpdatedWord] = useState<WordItem | null>(null);
+  const [updatedMorphemeWord, setUpdatedMorphemeWord] =
+    useState<MorphemeWord | null>(null);
+  const [updatedSentence, setUpdatedSentence] = useState<SentenceItem | null>(
+    null
+  );
   const [updatedTrickyWord, setUpdatedTrickyWord] = useState<string>("");
 
   function renderSheetContents(item: unknown) {
-    if (typeof item === "string") {
-      if (!updatedTrickyWord) setUpdatedTrickyWord(item);
-      return renderTrickyWordSheetContents(item);
-    } else if ((item as Code).spelling) {
-      return renderCodeSheetContents(item as Code);
-    } else if ((item as Morpheme).morpheme) {
-      return renderMorphemeSheetContents(item as Morpheme);
-    } else if ((item as SentenceItem).sentence) {
-      return renderSentenceSheetContents(item as SentenceItem);
-    } else if ((item as WordItem | MorphemeWord).word) {
-      if ((item as WordItem).phonemes) {
+    switch (fieldName) {
+      case "newCode":
+        if (!updatedCode) setUpdatedCode(item as Code);
+        return renderCodeSheetContents();
+      case "cumulativeCode":
+        if (!updatedCode) setUpdatedCode(item as Code);
+        return renderCodeSheetContents();
+      case "newMorphemes":
+        if (!updatedMorpheme) setUpdatedMorpheme(item as Morpheme);
+        return renderMorphemeSheetContents(item as Morpheme);
+      case "cumulativeMorphemes":
+        if (!updatedMorpheme) setUpdatedMorpheme(item as Morpheme);
+        return renderMorphemeSheetContents(item as Morpheme);
+      case "wordSets":
+        if (!updatedWord) setUpdatedWord(item as WordItem);
         return renderWordSheetContents(item as WordItem);
-      } else if ((item as MorphemeWord).morphemes) {
+      case "morphemeWordSets":
+        if (!updatedMorphemeWord) setUpdatedMorphemeWord(item as MorphemeWord);
         return renderMorphemeWordSheetContents(item as MorphemeWord);
-      }
+      case "sentences":
+        if (!updatedSentence) setUpdatedSentence(item as SentenceItem);
+        return renderSentenceSheetContents(item as SentenceItem);
+      case "trickyWords":
+        if (!updatedTrickyWord) setUpdatedTrickyWord(item as string);
+        return renderTrickyWordSheetContents();
+      default:
+        return <p>Unsupported field</p>;
     }
   }
 
-  function renderTrickyWordSheetContents(trickyWord: string) {
-    function saveTrickyWordChanges() {
-      if (!level) return;
-      const newTrickyWords = level.trickyWords.map((word) =>
-        word === trickyWord ? updatedTrickyWord : word
-      );
-      updateLevel(levelId, { trickyWords: newTrickyWords });
+  function saveChanges() {
+    if (!level) return;
+
+    const newLevel = { ...level };
+
+    switch (fieldName) {
+      case "newCode":
+      case "cumulativeCode":
+        if (!updatedCode) return;
+        newLevel[fieldName][index] = updatedCode;
+        break;
+      case "newMorphemes":
+      case "cumulativeMorphemes":
+        if (!updatedMorpheme) return;
+        newLevel[fieldName][index] = updatedMorpheme;
+        break;
+      case "wordSets":
+      case "wordChains":
+        if (!updatedWord) return;
+        newLevel[fieldName][index] = updatedWord;
+        break;
+      case "morphemeWordSets":
+        if (!updatedMorphemeWord) return;
+        newLevel[fieldName][index] = updatedMorphemeWord;
+        break;
+      case "sentences":
+        if (!updatedSentence) return;
+        newLevel[fieldName][index] = updatedSentence;
+        break;
+      case "trickyWords":
+        if (!updatedTrickyWord) return;
+        newLevel[fieldName][index] = updatedTrickyWord;
+        break;
+      default:
+        return;
     }
 
+    updateLevel(levelId, newLevel);
+  }
+
+  function renderTrickyWordSheetContents() {
     return (
       <>
         <SheetTitle>Tricky Word</SheetTitle>
@@ -71,22 +128,87 @@ export default function CodeSheet({
             onChange={(e) => setUpdatedTrickyWord(e.target.value)}
           />
         </SheetContentContainer>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button onClick={saveTrickyWordChanges}>Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
       </>
     );
   }
 
-  function renderCodeSheetContents(code: Code) {
+  function renderCodeSheetContents() {
     return (
-      <SheetContentContainer>
+      <>
         <SheetTitle>Code</SheetTitle>
         <SheetDescription>Edit a code item.</SheetDescription>
-        <p>{code.spelling}</p>
-      </SheetContentContainer>
+        {updatedCode && (
+          <SheetContentContainer>
+            <Label htmlFor="spelling" className="mt-2">
+              Spelling
+            </Label>
+            <Input
+              id="spelling"
+              className="mt-2 mb-2"
+              value={updatedCode?.spelling || ""}
+              onChange={(e) =>
+                setUpdatedCode({ ...updatedCode, spelling: e.target.value })
+              }
+            />
+            <Label htmlFor="phoneme" className="mt-2">
+              Phoneme(s)
+            </Label>
+            {Array.isArray(updatedCode.phoneme) ? (
+              <>
+                {updatedCode.phoneme.map((phoneme, index) => (
+                  <div key={index} className="relative">
+                    <Input
+                      className="mt-2"
+                      value={phoneme}
+                      onChange={(e) =>
+                        setUpdatedCode({
+                          ...updatedCode,
+                          phoneme: (updatedCode.phoneme as string[]).map(
+                            (p, i) => (i === index ? e.target.value : p)
+                          ),
+                        })
+                      }
+                    />
+                    <X
+                      size={16}
+                      className="absolute right-2 top-1/2 cursor-pointer"
+                      onClick={() => {
+                        setUpdatedCode({
+                          ...updatedCode,
+                          phoneme: (updatedCode.phoneme as string[]).filter(
+                            (_, i) => i !== index
+                          ),
+                        });
+                      }}
+                    />
+                  </div>
+                ))}
+                <Input
+                  id="phoneme"
+                  className="mt-2 mb-2"
+                  value={""}
+                  placeholder="Add phoneme"
+                  onChange={(e) =>
+                    setUpdatedCode({
+                      ...updatedCode,
+                      phoneme: [...updatedCode.phoneme, e.target.value],
+                    })
+                  }
+                />
+              </>
+            ) : (
+              <Input
+                id="phoneme"
+                className="mt-4 mb-4"
+                value={updatedCode?.phoneme || ""}
+                onChange={(e) =>
+                  setUpdatedCode({ ...updatedCode, phoneme: e.target.value })
+                }
+              />
+            )}
+          </SheetContentContainer>
+        )}
+      </>
     );
   }
 
@@ -133,7 +255,18 @@ export default function CodeSheet({
   return (
     <Sheet>
       <SheetTrigger>{children}</SheetTrigger>
-      <SheetContent>{renderSheetContents(item)}</SheetContent>
+      <SheetContent>
+        {renderSheetContents(item)}
+
+        <SheetFooter className="flex gap-2">
+          <SheetClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </SheetClose>
+          <SheetClose asChild>
+            <Button onClick={saveChanges}>Save changes</Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
     </Sheet>
   );
 }
