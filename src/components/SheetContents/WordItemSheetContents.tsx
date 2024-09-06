@@ -1,4 +1,4 @@
-import { WordItem } from "@/model";
+import { Code, WordItem } from "@/model";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
 import SheetContentContainer from "./SheetContentContainer";
 import { Label } from "../ui/label";
@@ -6,6 +6,8 @@ import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
 import { Checkbox } from "../ui/checkbox";
 import { X } from "lucide-react";
+import styled from "styled-components";
+import NestedCodeSheet from "../NestedCodeSheet";
 
 interface WordItemSheetContentsProps {
   updatedWordItem: WordItem | null;
@@ -15,6 +17,16 @@ export default function WordItemSheetContents({
   updatedWordItem,
   setUpdatedWordItem,
 }: WordItemSheetContentsProps) {
+  function handleSaveCode(index: number, updatedCode: Code) {
+    if (!updatedWordItem) return;
+    setUpdatedWordItem({
+      ...updatedWordItem,
+      phonemes: updatedWordItem.phonemes.map((code, i) =>
+        i === index ? updatedCode : code
+      ),
+    });
+  }
+
   return (
     <>
       <SheetTitle>Word Item</SheetTitle>
@@ -36,9 +48,17 @@ export default function WordItemSheetContents({
           <Label htmlFor="code" className="mt-4">
             Code
           </Label>
-          {updatedWordItem.phonemes.map((code, index) => (
-            <GameDataItem key={index} value={code.spelling} />
-          ))}
+          <CodeContainer className="mt-2">
+            {updatedWordItem.phonemes.map((code, index) => (
+              <NestedCodeSheet
+                key={index}
+                code={code}
+                onSave={(updatedCode) => handleSaveCode(index, updatedCode)}
+              >
+                <GameDataItem value={code.spelling} />
+              </NestedCodeSheet>
+            ))}
+          </CodeContainer>
 
           <Label htmlFor="example" className="mt-4">
             Example
@@ -118,3 +138,9 @@ export default function WordItemSheetContents({
     </>
   );
 }
+
+const CodeContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem;
+`;
