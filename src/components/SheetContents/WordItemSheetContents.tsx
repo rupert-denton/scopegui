@@ -8,6 +8,7 @@ import { Checkbox } from "../ui/checkbox";
 import { X } from "lucide-react";
 import styled from "styled-components";
 import NestedCodeSheet from "../NestedCodeSheet";
+import { addCode } from "@/utils";
 
 interface WordItemSheetContentsProps {
   updatedWordItem: WordItem | null;
@@ -58,6 +59,13 @@ export default function WordItemSheetContents({
                 <GameDataItem value={code.spelling} />
               </NestedCodeSheet>
             ))}
+            <div
+              onClick={() => {
+                setUpdatedWordItem(addCode(updatedWordItem));
+              }}
+            >
+              <GameDataItem value="+" />
+            </div>
           </CodeContainer>
 
           <Label htmlFor="example" className="mt-4">

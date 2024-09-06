@@ -1,8 +1,10 @@
 import {
   Code,
   Morpheme,
+  MorphemeWord,
   ScopeAndSequence,
   ScopeAndSequenceLevel,
+  WordItem,
 } from "./model";
 
 export function getFromLocalStorage(key: string): ScopeAndSequence | null {
@@ -80,4 +82,57 @@ export function getPrettyGameName(game: string) {
     default:
       return game;
   }
+}
+
+export function addGameItem(
+  levelData: ScopeAndSequenceLevel,
+  fieldName: keyof ScopeAndSequenceLevel
+) {
+  const updatedLevel = { ...levelData };
+
+  switch (fieldName) {
+    case "newCode":
+      updatedLevel.newCode.push({ spelling: "?", phoneme: [] });
+      break;
+
+    case "newMorphemes":
+      updatedLevel.newMorphemes.push({ morpheme: "?", type: "base" });
+      break;
+
+    case "wordSets":
+    case "wordChains":
+      updatedLevel[fieldName].push({ word: "?", phonemes: [] });
+      break;
+
+    case "morphemeWordSets":
+      updatedLevel.morphemeWordSets.push({ word: "?", morphemes: [] });
+      break;
+
+    case "sentences":
+      updatedLevel.sentences.push({ sentence: "?" });
+      break;
+
+    case "trickyWords":
+      updatedLevel.trickyWords.push("?");
+      break;
+
+    default:
+      break;
+  }
+
+  return updatedLevel;
+}
+
+export function addMorpheme(morphemeWord: MorphemeWord): MorphemeWord {
+  return {
+    ...morphemeWord,
+    morphemes: [...morphemeWord.morphemes, { morpheme: "?", type: "base" }],
+  };
+}
+
+export function addCode(wordItem: WordItem): WordItem {
+  return {
+    ...wordItem,
+    phonemes: [...wordItem.phonemes, { spelling: "?", phoneme: [] }],
+  };
 }

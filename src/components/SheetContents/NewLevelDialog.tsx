@@ -127,6 +127,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
                 fieldName="newCode"
                 levelData={newLevel}
                 updateLevel={setNewLevel}
+                showAddButton
               />
             </ContentWrapper>
 
@@ -138,6 +139,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
                 fieldName="newMorphemes"
                 levelData={newLevel}
                 updateLevel={setNewLevel}
+                showAddButton
               />
             </ContentWrapper>
 
@@ -149,6 +151,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
                 fieldName="wordSets"
                 levelData={newLevel}
                 updateLevel={setNewLevel}
+                showAddButton
               />
             </ContentWrapper>
 
@@ -160,6 +163,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
                 fieldName="morphemeWordSets"
                 levelData={newLevel}
                 updateLevel={setNewLevel}
+                showAddButton
               />
             </ContentWrapper>
 
@@ -171,6 +175,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
                 fieldName="wordChains"
                 levelData={newLevel}
                 updateLevel={setNewLevel}
+                showAddButton
               />
             </ContentWrapper>
 
@@ -182,6 +187,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
                 fieldName="sentences"
                 levelData={newLevel}
                 updateLevel={setNewLevel}
+                showAddButton
               />
             </ContentWrapper>
 
@@ -193,6 +199,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
                 fieldName="trickyWords"
                 levelData={newLevel}
                 updateLevel={setNewLevel}
+                showAddButton
               />
             </ContentWrapper>
 

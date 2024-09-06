@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ScopeAndSequenceLevel } from "../model.ts";
 import GameDataItem from "./GameDataItem.tsx";
 import GameDataSheet from "./GameDataSheet.tsx";
+import { addGameItem } from "@/utils.ts";
 
 interface GameDataProps {
   fieldName: keyof ScopeAndSequenceLevel;
@@ -66,7 +67,15 @@ export default function GameData({
             />
           </GameDataSheet>
         ))}
-        {showAddButton && <GameDataItem value="+" />}
+        {showAddButton && (
+          <div
+            onClick={() => {
+              updateLevel(addGameItem(levelData, fieldName));
+            }}
+          >
+            <GameDataItem value="+" />
+          </div>
+        )}
       </>
     );
   }

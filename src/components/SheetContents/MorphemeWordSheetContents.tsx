@@ -6,6 +6,7 @@ import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
 import styled from "styled-components";
 import NestedMorphemeSheet from "../NestedMorphemeSheet";
+import { addMorpheme } from "@/utils";
 
 interface MorphemeWordSheetContentsProps {
   updatedMorphemeWord: MorphemeWord | null;
@@ -61,6 +62,13 @@ export default function MorphemeWordSheetContainer({
                 <GameDataItem value={morpheme.morpheme} />
               </NestedMorphemeSheet>
             ))}
+            <div
+              onClick={() => {
+                setUpdatedMorphemeWord(addMorpheme(updatedMorphemeWord));
+              }}
+            >
+              <GameDataItem value="+" />
+            </div>
           </MorphemesContainer>
 
           <Label htmlFor="example" className="mt-4">
