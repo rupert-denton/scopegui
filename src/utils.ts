@@ -1,4 +1,9 @@
-import { ScopeAndSequence, ScopeAndSequenceLevel } from "./model";
+import {
+  Code,
+  Morpheme,
+  ScopeAndSequence,
+  ScopeAndSequenceLevel,
+} from "./model";
 
 export function getFromLocalStorage(key: string): ScopeAndSequence | null {
   let localStorageItem: ScopeAndSequence | null = null;
@@ -28,4 +33,26 @@ export function saveToLocalStorage(
 
 export function assignLevelNumbers(data: ScopeAndSequenceLevel[]) {
   return data.map((level, index) => ({ ...level, level: index + 1 }));
+}
+
+export function reassignCumulativeItems(data: ScopeAndSequenceLevel[]) {
+  let updatedData = [...data];
+  let cumulativeCode: Code[] = [];
+  let cumulativeMorphemes: Morpheme[] = [];
+
+  for (const levelData of data) {
+    const updatedLevel = { ...levelData };
+
+    updatedLevel.cumulativeCode = cumulativeCode;
+    cumulativeCode = [...cumulativeCode, ...levelData.newCode];
+
+    updatedLevel.cumulativeMorphemes = cumulativeMorphemes;
+    cumulativeMorphemes = [...cumulativeMorphemes, ...levelData.newMorphemes];
+
+    updatedData = updatedData.map((level) =>
+      updatedLevel.id === level.id ? updatedLevel : level
+    );
+  }
+
+  return updatedData;
 }

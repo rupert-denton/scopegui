@@ -2,14 +2,21 @@ import styled, { keyframes } from "styled-components";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Plus, RefreshCcw } from "lucide-react";
+import useScopeAndSequence from "@/hooks/useScopeAndSequence";
+import { reassignCumulativeItems } from "@/utils";
 
 export default function ActionGroup() {
+  const { updatedScopeAndSequence, setUpdatedData } = useScopeAndSequence();
   const [isSpinning, setIsSpinning] = useState(false);
 
-  const handleRefreshClick = () => {
+  function handleReassignCumulativeCode() {
     setIsSpinning(true);
     setTimeout(() => setIsSpinning(false), 800);
-  };
+
+    if (updatedScopeAndSequence) {
+      setUpdatedData(reassignCumulativeItems(updatedScopeAndSequence.data));
+    }
+  }
 
   return (
     <ActionGroupContainer>
@@ -17,7 +24,11 @@ export default function ActionGroup() {
         <Plus size={16} />
         Add Level
       </Button>
-      <Button variant="outline" className="gap-2" onClick={handleRefreshClick}>
+      <Button
+        variant="outline"
+        className="gap-2"
+        onClick={handleReassignCumulativeCode}
+      >
         <SpinningIcon size={16} className={isSpinning ? "spinning" : ""} />
         Reassign Cumulative Items
       </Button>
