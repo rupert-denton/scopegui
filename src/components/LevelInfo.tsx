@@ -10,6 +10,7 @@ import {
 } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
+import GamesSelector from "./GamesSelector";
 
 interface LevelInfoProps {
   levelId: number;
@@ -25,6 +26,13 @@ export default function LevelInfo({
 
   if (fieldName === "id" || fieldName === "level") {
     return <p>{value}</p>;
+  } else if (fieldName === "games") {
+    return (
+      <GamesSelector
+        value={value as string[]}
+        onChange={(newValue) => updateLevel(levelId, { games: newValue })}
+      />
+    );
   } else if (Array.isArray(value)) {
     return (
       <LevelInfoContainer>

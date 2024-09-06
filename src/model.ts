@@ -37,6 +37,16 @@ export const gameDataFields = [
   "trickyWords",
 ];
 
+export const games = [
+  "mysticMatch",
+  "wordWeaver",
+  "phonemeForge",
+  "trickyWords",
+  "sentenceBuilder",
+  "wordRifts",
+  "wordSums",
+];
+
 export interface Code {
   spelling: string;
   phoneme: string[] | string;

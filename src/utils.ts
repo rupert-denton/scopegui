@@ -56,3 +56,28 @@ export function reassignCumulativeItems(data: ScopeAndSequenceLevel[]) {
 
   return updatedData;
 }
+
+export function getNextId(data: ScopeAndSequenceLevel[]) {
+  return data.reduce((maxId, level) => Math.max(maxId, level.id), 0) + 1;
+}
+
+export function getPrettyGameName(game: string) {
+  switch (game) {
+    case "mysticMatch":
+      return "Mystic Match";
+    case "wordWeaver":
+      return "Word Weaver";
+    case "phonemeForge":
+      return "Phoneme Forge";
+    case "trickyWords":
+      return "Tricky Words";
+    case "sentenceBuilder":
+      return "Sentence Builder";
+    case "wordRifts":
+      return "Word Rifts";
+    case "wordSums":
+      return "Word Sums";
+    default:
+      return game;
+  }
+}
