@@ -11,10 +11,9 @@ import {
 import { useState } from "react";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
 import styled from "styled-components";
-import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { X } from "lucide-react";
+import TrickyWordSheetContents from "./SheetContents/TrickyWordSheetContents";
+import CodeSheetContents from "./SheetContents/CodeSheetContents";
 
 interface GameDataSheetProps {
   levelId: number;
@@ -43,38 +42,9 @@ export default function CodeSheet({
   const [updatedSentence, setUpdatedSentence] = useState<SentenceItem | null>(
     null
   );
-  const [updatedTrickyWord, setUpdatedTrickyWord] = useState<string>("");
-
-  function renderSheetContents(item: unknown) {
-    switch (fieldName) {
-      case "newCode":
-        if (!updatedCode) setUpdatedCode(item as Code);
-        return renderCodeSheetContents();
-      case "cumulativeCode":
-        if (!updatedCode) setUpdatedCode(item as Code);
-        return renderCodeSheetContents();
-      case "newMorphemes":
-        if (!updatedMorpheme) setUpdatedMorpheme(item as Morpheme);
-        return renderMorphemeSheetContents(item as Morpheme);
-      case "cumulativeMorphemes":
-        if (!updatedMorpheme) setUpdatedMorpheme(item as Morpheme);
-        return renderMorphemeSheetContents(item as Morpheme);
-      case "wordSets":
-        if (!updatedWord) setUpdatedWord(item as WordItem);
-        return renderWordSheetContents(item as WordItem);
-      case "morphemeWordSets":
-        if (!updatedMorphemeWord) setUpdatedMorphemeWord(item as MorphemeWord);
-        return renderMorphemeWordSheetContents(item as MorphemeWord);
-      case "sentences":
-        if (!updatedSentence) setUpdatedSentence(item as SentenceItem);
-        return renderSentenceSheetContents(item as SentenceItem);
-      case "trickyWords":
-        if (!updatedTrickyWord) setUpdatedTrickyWord(item as string);
-        return renderTrickyWordSheetContents();
-      default:
-        return <p>Unsupported field</p>;
-    }
-  }
+  const [updatedTrickyWord, setUpdatedTrickyWord] = useState<string | null>(
+    null
+  );
 
   function saveChanges() {
     if (!level) return;
@@ -116,102 +86,6 @@ export default function CodeSheet({
     updateLevel(levelId, newLevel);
   }
 
-  function renderTrickyWordSheetContents() {
-    return (
-      <>
-        <SheetTitle>Tricky Word</SheetTitle>
-        <SheetDescription>Edit a tricky word.</SheetDescription>
-        <SheetContentContainer>
-          <Input
-            className="mt-4 mb-4"
-            value={updatedTrickyWord}
-            onChange={(e) => setUpdatedTrickyWord(e.target.value)}
-          />
-        </SheetContentContainer>
-      </>
-    );
-  }
-
-  function renderCodeSheetContents() {
-    return (
-      <>
-        <SheetTitle>Code</SheetTitle>
-        <SheetDescription>Edit a code item.</SheetDescription>
-        {updatedCode && (
-          <SheetContentContainer>
-            <Label htmlFor="spelling" className="mt-2">
-              Spelling
-            </Label>
-            <Input
-              id="spelling"
-              className="mt-2 mb-2"
-              value={updatedCode?.spelling || ""}
-              onChange={(e) =>
-                setUpdatedCode({ ...updatedCode, spelling: e.target.value })
-              }
-            />
-            <Label htmlFor="phoneme" className="mt-2">
-              Phoneme(s)
-            </Label>
-            {Array.isArray(updatedCode.phoneme) ? (
-              <>
-                {updatedCode.phoneme.map((phoneme, index) => (
-                  <div key={index} className="relative">
-                    <Input
-                      className="mt-2"
-                      value={phoneme}
-                      onChange={(e) =>
-                        setUpdatedCode({
-                          ...updatedCode,
-                          phoneme: (updatedCode.phoneme as string[]).map(
-                            (p, i) => (i === index ? e.target.value : p)
-                          ),
-                        })
-                      }
-                    />
-                    <X
-                      size={16}
-                      className="absolute right-2 top-1/2 cursor-pointer"
-                      onClick={() => {
-                        setUpdatedCode({
-                          ...updatedCode,
-                          phoneme: (updatedCode.phoneme as string[]).filter(
-                            (_, i) => i !== index
-                          ),
-                        });
-                      }}
-                    />
-                  </div>
-                ))}
-                <Input
-                  id="phoneme"
-                  className="mt-2 mb-2"
-                  value={""}
-                  placeholder="Add phoneme"
-                  onChange={(e) =>
-                    setUpdatedCode({
-                      ...updatedCode,
-                      phoneme: [...updatedCode.phoneme, e.target.value],
-                    })
-                  }
-                />
-              </>
-            ) : (
-              <Input
-                id="phoneme"
-                className="mt-4 mb-4"
-                value={updatedCode?.phoneme || ""}
-                onChange={(e) =>
-                  setUpdatedCode({ ...updatedCode, phoneme: e.target.value })
-                }
-              />
-            )}
-          </SheetContentContainer>
-        )}
-      </>
-    );
-  }
-
   function renderMorphemeSheetContents(morpheme: Morpheme) {
     return (
       <SheetContentContainer>
@@ -250,6 +124,49 @@ export default function CodeSheet({
         <p>{sentence.sentence}</p>
       </SheetContentContainer>
     );
+  }
+
+  function renderSheetContents(item: unknown) {
+    switch (fieldName) {
+      case "newCode":
+      case "cumulativeCode":
+        if (!updatedCode) setUpdatedCode(item as Code);
+        return (
+          <CodeSheetContents
+            updatedCode={updatedCode}
+            setUpdatedCode={setUpdatedCode}
+          />
+        );
+
+      case "newMorphemes":
+      case "cumulativeMorphemes":
+        if (!updatedMorpheme) setUpdatedMorpheme(item as Morpheme);
+        return renderMorphemeSheetContents(item as Morpheme);
+
+      case "wordSets":
+        if (!updatedWord) setUpdatedWord(item as WordItem);
+        return renderWordSheetContents(item as WordItem);
+
+      case "morphemeWordSets":
+        if (!updatedMorphemeWord) setUpdatedMorphemeWord(item as MorphemeWord);
+        return renderMorphemeWordSheetContents(item as MorphemeWord);
+
+      case "sentences":
+        if (!updatedSentence) setUpdatedSentence(item as SentenceItem);
+        return renderSentenceSheetContents(item as SentenceItem);
+
+      case "trickyWords":
+        if (!updatedTrickyWord) setUpdatedTrickyWord(item as string);
+        return (
+          <TrickyWordSheetContents
+            updatedTrickyWord={updatedTrickyWord}
+            setUpdatedTrickyWord={setUpdatedTrickyWord}
+          />
+        );
+
+      default:
+        return <p>Unsupported field</p>;
+    }
   }
 
   return (
