@@ -28,7 +28,11 @@ export default function LevelContent({ levelData }: LevelContentProps) {
             <TableCell className="font-medium">{key}</TableCell>
             <TableCell>
               {gameDataFields.includes(key) ? (
-                <GameData fieldName={key} value={value} />
+                <GameData
+                  levelId={levelData.id}
+                  fieldName={key}
+                  value={value}
+                />
               ) : (
                 <LevelInfo
                   levelId={levelData.id}
