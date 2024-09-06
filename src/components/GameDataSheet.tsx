@@ -16,6 +16,7 @@ import CodeSheetContents from "./SheetContents/CodeSheetContents";
 import MorphemeSheetContents from "./SheetContents/MorphemeSheetContents";
 import WordItemSheetContents from "./SheetContents/WordItemSheetContents";
 import SheetContentContainer from "./SheetContents/SheetContentContainer";
+import SentenceSheetContents from "./SheetContents/SentenceSheetContents";
 
 interface GameDataSheetProps {
   levelId: number;
@@ -98,16 +99,6 @@ export default function CodeSheet({
     );
   }
 
-  function renderSentenceSheetContents(sentence: SentenceItem) {
-    return (
-      <SheetContentContainer>
-        <SheetTitle>Sentence Item</SheetTitle>
-        <SheetDescription>Edit a sentence item.</SheetDescription>
-        <p>{sentence.sentence}</p>
-      </SheetContentContainer>
-    );
-  }
-
   function renderSheetContents(item: unknown) {
     switch (fieldName) {
       case "newCode":
@@ -146,7 +137,12 @@ export default function CodeSheet({
 
       case "sentences":
         if (!updatedSentence) setUpdatedSentence(item as SentenceItem);
-        return renderSentenceSheetContents(item as SentenceItem);
+        return (
+          <SentenceSheetContents
+            updatedSentence={updatedSentence}
+            setUpdatedSentence={setUpdatedSentence}
+          />
+        );
 
       case "trickyWords":
         if (!updatedTrickyWord) setUpdatedTrickyWord(item as string);
