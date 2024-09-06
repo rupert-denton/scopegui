@@ -18,7 +18,6 @@ interface GameDataProps {
 }
 export default function GameData({ levelId, fieldName, value }: GameDataProps) {
   const renderField = () => {
-    // Handle based on the field type
     if (!value || !Array.isArray(value)) {
       return <p>No data available</p>;
     }
