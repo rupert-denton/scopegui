@@ -26,7 +26,7 @@ interface GameDataSheetProps {
   index: number;
   children?: React.ReactNode;
 }
-export default function CodeSheet({
+export default function GameDataSheet({
   levelId,
   fieldName,
   item,
