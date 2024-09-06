@@ -54,10 +54,21 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New Level</DialogTitle>
-          <DialogDescription>
-            ID: {newLevel.id} Level: {newLevel.level}
-          </DialogDescription>
+          <DialogDescription>ID: {newLevel.id}</DialogDescription>
           <NewLevelFormContainer>
+            <Label htmlFor="level" className="mt-4">
+              Level
+            </Label>
+            <Input
+              id="level"
+              className="mt-2"
+              type="number"
+              value={newLevel.level}
+              onChange={(e) =>
+                setNewLevel({ ...newLevel, level: parseInt(e.target.value) })
+              }
+            />
+
             <Label htmlFor="tier" className="mt-4">
               Tier
             </Label>
