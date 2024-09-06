@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { ScopeAndSequenceLevel } from "../model.ts";
 import GameDataItem from "./GameDataItem.tsx";
 import GameDataSheet from "./GameDataSheet.tsx";
-import { addGameItem } from "@/utils.ts";
+import { createGameItem } from "@/utils.ts";
+import { useMemo } from "react";
 
 interface GameDataProps {
   fieldName: keyof ScopeAndSequenceLevel;
@@ -16,6 +17,8 @@ export default function GameData({
   updateLevel,
   showAddButton = false,
 }: GameDataProps) {
+  const newGameItem = useMemo(() => createGameItem(fieldName), [fieldName]);
+
   const renderField = () => {
     if (!levelData[fieldName] || !Array.isArray(levelData[fieldName])) {
       return <p>No data available</p>;
@@ -68,13 +71,15 @@ export default function GameData({
           </GameDataSheet>
         ))}
         {showAddButton && (
-          <div
-            onClick={() => {
-              updateLevel(addGameItem(levelData, fieldName));
-            }}
+          <GameDataSheet
+            fieldName={fieldName}
+            index={items.length}
+            levelData={levelData}
+            item={newGameItem}
+            updateLevel={updateLevel}
           >
             <GameDataItem value="+" />
-          </div>
+          </GameDataSheet>
         )}
       </>
     );

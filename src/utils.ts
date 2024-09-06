@@ -1,10 +1,8 @@
 import {
   Code,
   Morpheme,
-  MorphemeWord,
   ScopeAndSequence,
   ScopeAndSequenceLevel,
-  WordItem,
 } from "./model";
 
 export function getFromLocalStorage(key: string): ScopeAndSequence | null {
@@ -84,55 +82,25 @@ export function getPrettyGameName(game: string) {
   }
 }
 
-export function addGameItem(
-  levelData: ScopeAndSequenceLevel,
-  fieldName: keyof ScopeAndSequenceLevel
-) {
-  const updatedLevel = { ...levelData };
-
+export function createGameItem(fieldName: keyof ScopeAndSequenceLevel) {
   switch (fieldName) {
     case "newCode":
-      updatedLevel.newCode.push({ spelling: "?", phoneme: [] });
-      break;
+      return { spelling: "", phoneme: [] };
 
     case "newMorphemes":
-      updatedLevel.newMorphemes.push({ morpheme: "?", type: "base" });
-      break;
+      return { morpheme: "", type: "base" };
 
     case "wordSets":
     case "wordChains":
-      updatedLevel[fieldName].push({ word: "?", phonemes: [] });
-      break;
+      return { word: "", phonemes: [] };
 
     case "morphemeWordSets":
-      updatedLevel.morphemeWordSets.push({ word: "?", morphemes: [] });
-      break;
+      return { word: "", morphemes: [] };
 
     case "sentences":
-      updatedLevel.sentences.push({ sentence: "?" });
-      break;
+      return { sentence: "" };
 
     case "trickyWords":
-      updatedLevel.trickyWords.push("?");
-      break;
-
-    default:
-      break;
+      return "";
   }
-
-  return updatedLevel;
-}
-
-export function addMorpheme(morphemeWord: MorphemeWord): MorphemeWord {
-  return {
-    ...morphemeWord,
-    morphemes: [...morphemeWord.morphemes, { morpheme: "?", type: "base" }],
-  };
-}
-
-export function addCode(wordItem: WordItem): WordItem {
-  return {
-    ...wordItem,
-    phonemes: [...wordItem.phonemes, { spelling: "?", phoneme: [] }],
-  };
 }
