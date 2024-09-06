@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { Plus, RefreshCcw } from "lucide-react";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
 import { reassignCumulativeItems } from "@/utils";
+import NewLevelDialog from "./SheetContents/NewLevelDialog";
 
 export default function ActionGroup() {
   const { updatedScopeAndSequence, setUpdatedData } = useScopeAndSequence();
@@ -20,10 +21,12 @@ export default function ActionGroup() {
 
   return (
     <ActionGroupContainer>
-      <Button variant="outline" className="gap-2">
-        <Plus size={16} />
-        Add Level
-      </Button>
+      <NewLevelDialog>
+        <Button variant="outline" className="gap-2">
+          <Plus size={16} />
+          Add Level
+        </Button>
+      </NewLevelDialog>
       <Button
         variant="outline"
         className="gap-2"
