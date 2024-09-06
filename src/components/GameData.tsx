@@ -6,43 +6,46 @@ import {
   WordItem,
   MorphemeWord,
   SentenceItem,
-  gameDataFields,
 } from "../model.ts";
 import GameDataItem from "./GameDataItem.tsx";
 import GameDataSheet from "./GameDataSheet.tsx";
 
 interface GameDataProps {
-  levelId: number;
-  fieldName: (typeof gameDataFields)[number];
-  value: ScopeAndSequenceLevel;
+  fieldName: keyof ScopeAndSequenceLevel;
+  levelData: ScopeAndSequenceLevel;
+  updateLevel: (updatedLevel: ScopeAndSequenceLevel) => void;
 }
-export default function GameData({ levelId, fieldName, value }: GameDataProps) {
+export default function GameData({
+  fieldName,
+  levelData,
+  updateLevel,
+}: GameDataProps) {
   const renderField = () => {
-    if (!value || !Array.isArray(value)) {
+    if (!levelData[fieldName] || !Array.isArray(levelData[fieldName])) {
       return <p>No data available</p>;
     }
 
     switch (fieldName) {
       case "newCode":
       case "cumulativeCode":
-        return renderCodeList(value as Code[]);
+        return renderCodeList(levelData[fieldName] as Code[]);
 
       case "newMorphemes":
       case "cumulativeMorphemes":
-        return renderMorphemeList(value as Morpheme[]);
+        return renderMorphemeList(levelData[fieldName] as Morpheme[]);
 
       case "wordSets":
       case "wordChains":
-        return renderWordItemList(value as WordItem[]);
+        return renderWordItemList(levelData[fieldName] as WordItem[]);
 
       case "morphemeWordSets":
-        return renderMorphemeWordList(value as MorphemeWord[]);
+        return renderMorphemeWordList(levelData[fieldName] as MorphemeWord[]);
 
       case "sentences":
-        return renderSentenceList(value as SentenceItem[]);
+        return renderSentenceList(levelData[fieldName] as SentenceItem[]);
 
       case "trickyWords":
-        return renderTrickyWords(value as string[]);
+        return renderTrickyWords(levelData[fieldName] as string[]);
 
       default:
         return <p>Unsupported field</p>;
@@ -53,10 +56,11 @@ export default function GameData({ levelId, fieldName, value }: GameDataProps) {
     codes.map((code, index) => (
       <GameDataSheet
         key={index}
-        levelId={levelId}
         fieldName={fieldName}
         item={code}
         index={index}
+        levelData={levelData}
+        updateLevel={updateLevel}
       >
         <GameDataItem value={code.spelling} />
       </GameDataSheet>
@@ -66,10 +70,11 @@ export default function GameData({ levelId, fieldName, value }: GameDataProps) {
     morphemes.map((morpheme, index) => (
       <GameDataSheet
         key={index}
-        levelId={levelId}
         fieldName={fieldName}
         item={morpheme}
         index={index}
+        levelData={levelData}
+        updateLevel={updateLevel}
       >
         <GameDataItem value={morpheme.morpheme} />
       </GameDataSheet>
@@ -79,10 +84,11 @@ export default function GameData({ levelId, fieldName, value }: GameDataProps) {
     words.map((wordItem, index) => (
       <GameDataSheet
         key={index}
-        levelId={levelId}
         fieldName={fieldName}
         item={wordItem}
         index={index}
+        levelData={levelData}
+        updateLevel={updateLevel}
       >
         <GameDataItem value={wordItem.word} />
       </GameDataSheet>
@@ -92,10 +98,11 @@ export default function GameData({ levelId, fieldName, value }: GameDataProps) {
     morphemeWords.map((mw, index) => (
       <GameDataSheet
         key={index}
-        levelId={levelId}
         fieldName={fieldName}
         item={mw}
         index={index}
+        levelData={levelData}
+        updateLevel={updateLevel}
       >
         <GameDataItem value={mw.word} />
       </GameDataSheet>
@@ -105,10 +112,11 @@ export default function GameData({ levelId, fieldName, value }: GameDataProps) {
     sentences.map((sentenceItem, index) => (
       <GameDataSheet
         key={index}
-        levelId={levelId}
         fieldName={fieldName}
         item={sentenceItem}
         index={index}
+        levelData={levelData}
+        updateLevel={updateLevel}
       >
         <GameDataItem value={sentenceItem.sentence} />
       </GameDataSheet>
@@ -118,10 +126,11 @@ export default function GameData({ levelId, fieldName, value }: GameDataProps) {
     words.map((word, index) => (
       <GameDataSheet
         key={index}
-        levelId={levelId}
         fieldName={fieldName}
         item={word}
         index={index}
+        levelData={levelData}
+        updateLevel={updateLevel}
       >
         <GameDataItem value={word} />
       </GameDataSheet>

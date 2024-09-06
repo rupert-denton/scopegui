@@ -1,4 +1,11 @@
-import { Code, Morpheme, MorphemeWord, SentenceItem, WordItem } from "@/model";
+import {
+  Code,
+  Morpheme,
+  MorphemeWord,
+  ScopeAndSequenceLevel,
+  SentenceItem,
+  WordItem,
+} from "@/model";
 import {
   Sheet,
   SheetClose,
@@ -9,7 +16,6 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import { useState } from "react";
-import useScopeAndSequence from "@/hooks/useScopeAndSequence";
 import { Button } from "./ui/button";
 import TrickyWordSheetContents from "./SheetContents/TrickyWordSheetContents";
 import CodeSheetContents from "./SheetContents/CodeSheetContents";
@@ -20,24 +26,21 @@ import SentenceSheetContents from "./SheetContents/SentenceSheetContents";
 import MorphemeWordSheetContents from "./SheetContents/MorphemeWordSheetContents";
 
 interface GameDataSheetProps {
-  levelId: number;
   fieldName: string;
   item: unknown;
   index: number;
+  levelData: ScopeAndSequenceLevel;
+  updateLevel: (updatedLevel: ScopeAndSequenceLevel) => void;
   children?: React.ReactNode;
 }
 export default function GameDataSheet({
-  levelId,
   fieldName,
   item,
   index,
+  levelData,
+  updateLevel,
   children,
 }: GameDataSheetProps) {
-  const { updatedScopeAndSequence, updateLevel } = useScopeAndSequence();
-  const level = updatedScopeAndSequence?.data.find(
-    (level) => level.id === levelId
-  );
-
   const [updatedCode, setUpdatedCode] = useState<Code | null>(null);
   const [updatedMorpheme, setUpdatedMorpheme] = useState<Morpheme | null>(null);
   const [updatedWordItem, setUpdatedWordItem] = useState<WordItem | null>(null);
@@ -51,9 +54,9 @@ export default function GameDataSheet({
   );
 
   function saveChanges() {
-    if (!level) return;
+    if (!levelData) return;
 
-    const newLevel = { ...level };
+    const newLevel = { ...levelData };
 
     switch (fieldName) {
       case "newCode":
@@ -87,7 +90,7 @@ export default function GameDataSheet({
         return;
     }
 
-    updateLevel(levelId, newLevel);
+    updateLevel(newLevel);
   }
 
   function renderSheetContents(item: unknown) {

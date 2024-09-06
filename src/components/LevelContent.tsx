@@ -9,11 +9,13 @@ import {
 import { gameDataFields, ScopeAndSequenceLevel } from "../model";
 import GameData from "./GameData";
 import LevelInfo from "./LevelInfo";
+import useScopeAndSequence from "@/hooks/useScopeAndSequence";
 
 interface LevelContentProps {
   levelData: ScopeAndSequenceLevel;
 }
 export default function LevelContent({ levelData }: LevelContentProps) {
+  const { updateLevel } = useScopeAndSequence();
   return (
     <Table>
       <TableHeader>
@@ -29,9 +31,9 @@ export default function LevelContent({ levelData }: LevelContentProps) {
             <TableCell>
               {gameDataFields.includes(key) ? (
                 <GameData
-                  levelId={levelData.id}
-                  fieldName={key}
-                  value={value}
+                  fieldName={key as keyof ScopeAndSequenceLevel}
+                  levelData={levelData}
+                  updateLevel={(updated) => updateLevel(value.id, updated)}
                 />
               ) : (
                 <LevelInfo
