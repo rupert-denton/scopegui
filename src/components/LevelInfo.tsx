@@ -1,16 +1,10 @@
 import styled from "styled-components";
 import GameDataItem from "./GameDataItem";
 import { Input } from "./ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
 import GamesSelector from "./GamesSelector";
+import FocusSelector from "./FocusSelector";
 
 interface LevelInfoProps {
   levelId: number;
@@ -43,18 +37,10 @@ export default function LevelInfo({
     );
   } else if (fieldName === "focus") {
     return (
-      <Select
+      <FocusSelector
         value={value as string}
-        onValueChange={(newValue) => updateLevel(levelId, { focus: newValue })}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder={value as string} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="phonics">phonics</SelectItem>
-          <SelectItem value="morphology">morphology</SelectItem>
-        </SelectContent>
-      </Select>
+        onChange={(newValue) => updateLevel(levelId, { focus: newValue })}
+      />
     );
   } else if (typeof value === "string") {
     return (

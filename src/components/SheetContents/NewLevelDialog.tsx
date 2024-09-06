@@ -17,6 +17,7 @@ import styled from "styled-components";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import GamesSelector from "../GamesSelector";
+import FocusSelector from "../FocusSelector";
 
 interface NewLevelDialogProps {
   children?: React.ReactNode;
@@ -29,7 +30,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
     tier: 1,
     levelInfo: "",
     games: [],
-    focus: "phonology",
+    focus: "phonics",
 
     newCode: [],
     newMorphemes: [],
@@ -53,12 +54,10 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New Level</DialogTitle>
-          <DialogDescription>Add a new level.</DialogDescription>
+          <DialogDescription>
+            ID: {newLevel.id} Level: {newLevel.level}
+          </DialogDescription>
           <NewLevelFormContainer>
-            <p>
-              ID: {newLevel.id} Level: {newLevel.level}
-            </p>
-
             <Label htmlFor="tier" className="mt-4">
               Tier
             </Label>
@@ -78,6 +77,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
             <Input
               id="levelInfo"
               className="mt-2"
+              placeholder="Level Info"
               value={newLevel.levelInfo}
               onChange={(e) =>
                 setNewLevel({ ...newLevel, levelInfo: e.target.value })
@@ -87,16 +87,22 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
             <Label htmlFor="games" className="mt-4">
               Games
             </Label>
-            <div className="mt-2">
+            <GamesSelectorWrapper className="mt-2">
               <GamesSelector
                 value={newLevel.games}
                 onChange={(games) => setNewLevel({ ...newLevel, games })}
               />
-            </div>
+            </GamesSelectorWrapper>
 
             <Label htmlFor="focus" className="mt-4">
               Focus
             </Label>
+            <div className="mt-2 w-full">
+              <FocusSelector
+                value={newLevel.focus}
+                onChange={(focus) => setNewLevel({ ...newLevel, focus })}
+              />
+            </div>
 
             <Label htmlFor="newCode" className="mt-4">
               New Code
@@ -148,4 +154,10 @@ const NewLevelFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1rem 0;
+`;
+
+const GamesSelectorWrapper = styled.div`
+  padding: 1rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
 `;

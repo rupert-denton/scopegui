@@ -35,9 +35,6 @@ const GamesSelectorContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
-  padding: 1rem;
-  border: 1px solid hsl(var(--border));
-  border-radius: 0.5rem;
 `;
 
 const GameSelector = styled.div`
