@@ -18,6 +18,8 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import GamesSelector from "../GamesSelector";
 import FocusSelector from "../FocusSelector";
+import GameData from "../GameData";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface NewLevelDialogProps {
   children?: React.ReactNode;
@@ -51,11 +53,13 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="max-w-2xl overflow-visible">
         <DialogHeader>
           <DialogTitle>New Level</DialogTitle>
           <DialogDescription>ID: {newLevel.id}</DialogDescription>
-          <NewLevelFormContainer>
+        </DialogHeader>
+        <NewLevelFormContainer>
+          <div className="px-2 mr-4">
             <Label htmlFor="level" className="mt-4">
               Level
             </Label>
@@ -118,36 +122,85 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
             <Label htmlFor="newCode" className="mt-4">
               New Code
             </Label>
+            <ContentWrapper className="mt-2">
+              <GameData
+                fieldName="newCode"
+                levelData={newLevel}
+                updateLevel={setNewLevel}
+              />
+            </ContentWrapper>
 
             <Label htmlFor="newMorphemes" className="mt-4">
               New Morphemes
             </Label>
+            <ContentWrapper className="mt-2">
+              <GameData
+                fieldName="newMorphemes"
+                levelData={newLevel}
+                updateLevel={setNewLevel}
+              />
+            </ContentWrapper>
 
             <Label htmlFor="wordSets" className="mt-4">
               Word Sets
             </Label>
+            <ContentWrapper className="mt-2">
+              <GameData
+                fieldName="wordSets"
+                levelData={newLevel}
+                updateLevel={setNewLevel}
+              />
+            </ContentWrapper>
 
             <Label htmlFor="morphemeWordSets" className="mt-4">
               Morpheme Word Sets
             </Label>
+            <ContentWrapper className="mt-2">
+              <GameData
+                fieldName="morphemeWordSets"
+                levelData={newLevel}
+                updateLevel={setNewLevel}
+              />
+            </ContentWrapper>
 
             <Label htmlFor="wordChains" className="mt-4">
               Word Chains
             </Label>
+            <ContentWrapper className="mt-2">
+              <GameData
+                fieldName="wordChains"
+                levelData={newLevel}
+                updateLevel={setNewLevel}
+              />
+            </ContentWrapper>
 
             <Label htmlFor="sentences" className="mt-4">
               Sentences
             </Label>
+            <ContentWrapper className="mt-2">
+              <GameData
+                fieldName="sentences"
+                levelData={newLevel}
+                updateLevel={setNewLevel}
+              />
+            </ContentWrapper>
 
             <Label htmlFor="trickyWords" className="mt-4">
               Tricky Words
             </Label>
+            <ContentWrapper className="mt-2">
+              <GameData
+                fieldName="trickyWords"
+                levelData={newLevel}
+                updateLevel={setNewLevel}
+              />
+            </ContentWrapper>
 
             <Label htmlFor="extra" className="mt-4">
               Extra
             </Label>
-          </NewLevelFormContainer>
-        </DialogHeader>
+          </div>
+        </NewLevelFormContainer>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -161,10 +214,10 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
   );
 }
 
-const NewLevelFormContainer = styled.div`
+const NewLevelFormContainer = styled(ScrollArea)`
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
+  max-height: 80vh;
 `;
 
 const ContentWrapper = styled.div`
