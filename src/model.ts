@@ -54,7 +54,6 @@ export interface WordItem {
   phonemes: Code[];
   example?: string;
   available?: boolean;
-  reviewPoolItem?: boolean;
   syllables?: string[];
 }
 
