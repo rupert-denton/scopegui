@@ -98,12 +98,12 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
             <Label htmlFor="games" className="mt-4">
               Games
             </Label>
-            <GamesSelectorWrapper className="mt-2">
+            <ContentWrapper className="mt-2">
               <GamesSelector
                 value={newLevel.games}
                 onChange={(games) => setNewLevel({ ...newLevel, games })}
               />
-            </GamesSelectorWrapper>
+            </ContentWrapper>
 
             <Label htmlFor="focus" className="mt-4">
               Focus
@@ -167,7 +167,7 @@ const NewLevelFormContainer = styled.div`
   margin: 1rem 0;
 `;
 
-const GamesSelectorWrapper = styled.div`
+const ContentWrapper = styled.div`
   padding: 1rem;
   border: 1px solid hsl(var(--border));
   border-radius: 0.5rem;
