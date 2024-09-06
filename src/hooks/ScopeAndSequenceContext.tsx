@@ -16,6 +16,10 @@ interface ScopeAndSequenceContextType {
 
   setUpdatedVersion: (version: string | null) => void;
   setUpdatedData: (data: ScopeAndSequenceLevel[]) => void;
+  updateLevel(
+    levelId: number,
+    updatedLevel: Partial<ScopeAndSequenceLevel>
+  ): void;
 
   selectedLevel: number;
   setSelectedLevel: (level: number) => void;
@@ -114,6 +118,28 @@ export function ScopeAndSequenceProvider({
     });
   }
 
+  function updateLevel(
+    levelId: number,
+    updatedLevel: Partial<ScopeAndSequenceLevel>
+  ) {
+    if (!updatedScopeAndSequence) {
+      console.error("No scope and sequence loaded");
+      return;
+    }
+
+    const updatedData = updatedScopeAndSequence.data.map((level) => {
+      if (level.id === levelId) {
+        return { ...level, ...updatedLevel };
+      }
+      return level;
+    });
+
+    setUpdatedScopeAndSequence({
+      ...updatedScopeAndSequence,
+      data: updatedData,
+    });
+  }
+
   return (
     <ScopeAndSequenceContext.Provider
       value={{
@@ -124,6 +150,7 @@ export function ScopeAndSequenceProvider({
         unloadScopeAndSequence,
         setUpdatedVersion,
         setUpdatedData,
+        updateLevel,
         selectedLevel,
         setSelectedLevel,
       }}
