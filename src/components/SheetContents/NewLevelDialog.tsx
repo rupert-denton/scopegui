@@ -68,7 +68,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
           <DialogDescription>ID: {newLevel.id}</DialogDescription>
         </DialogHeader>
         <NewLevelFormContainer>
-          <div className="px-2 mr-4">
+          <div className="px-2 pb-4 mr-4">
             <Label htmlFor="level">Level</Label>
             <Input
               id="level"
@@ -219,7 +219,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
 
             <Label htmlFor="extra">Extra</Label>
             {newLevel.extra.map((extra, index) => (
-              <div key={index} className="relative mt-1 mb-2">
+              <div key={index} className="relative mt-1">
                 <Input
                   id={`extra-${index}`}
                   className="mt-2"
