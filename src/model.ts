@@ -11,7 +11,7 @@ export interface ScopeAndSequenceLevel {
   levelInfo: string;
   games: string[];
   focus: string;
-  extra?: string | string[];
+  extra: string[];
 
   // game data
   newCode: Code[];

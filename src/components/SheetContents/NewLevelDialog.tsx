@@ -27,6 +27,7 @@ import GamesSelector from "../GamesSelector";
 import FocusSelector from "../FocusSelector";
 import GameData from "../GameData";
 import { ScrollArea } from "../ui/scroll-area";
+import { X } from "lucide-react";
 
 interface NewLevelDialogProps {
   children?: React.ReactNode;
@@ -40,6 +41,7 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
     levelInfo: "",
     games: [],
     focus: "phonics",
+    extra: [],
 
     newCode: [],
     newMorphemes: [],
@@ -67,12 +69,10 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
         </DialogHeader>
         <NewLevelFormContainer>
           <div className="px-2 mr-4">
-            <Label htmlFor="level" className="mt-4">
-              Level
-            </Label>
+            <Label htmlFor="level">Level</Label>
             <Input
               id="level"
-              className="mt-2"
+              className="mt-1 mb-2"
               type="number"
               value={newLevel.level}
               onChange={(e) =>
@@ -80,12 +80,10 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               }
             />
 
-            <Label htmlFor="tier" className="mt-4">
-              Tier
-            </Label>
+            <Label htmlFor="tier">Tier</Label>
             <Input
               id="tier"
-              className="mt-2"
+              className="mt-1 mb-2"
               type="number"
               value={newLevel.tier}
               onChange={(e) =>
@@ -93,12 +91,10 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               }
             />
 
-            <Label htmlFor="levelInfo" className="mt-4">
-              Level Info
-            </Label>
+            <Label htmlFor="levelInfo">Level Info</Label>
             <Input
               id="levelInfo"
-              className="mt-2"
+              className="mt-1 mb-2"
               placeholder="Level Info"
               value={newLevel.levelInfo}
               onChange={(e) =>
@@ -106,30 +102,24 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               }
             />
 
-            <Label htmlFor="games" className="mt-4">
-              Games
-            </Label>
-            <ContentWrapper className="mt-2">
+            <Label htmlFor="games">Games</Label>
+            <ContentWrapper className="mt-1 mb-2">
               <GamesSelector
                 value={newLevel.games}
                 onChange={(games) => setNewLevel({ ...newLevel, games })}
               />
             </ContentWrapper>
 
-            <Label htmlFor="focus" className="mt-4">
-              Focus
-            </Label>
-            <div className="mt-2 w-full">
+            <Label htmlFor="focus">Focus</Label>
+            <div className="mt-1 mb-2 w-full">
               <FocusSelector
                 value={newLevel.focus}
                 onChange={(focus) => setNewLevel({ ...newLevel, focus })}
               />
             </div>
 
-            <Label htmlFor="newCode" className="mt-4">
-              New Code
-            </Label>
-            <ContentWrapper className="mt-2">
+            <Label htmlFor="newCode">New Code</Label>
+            <ContentWrapper className="mt-1 mb-2">
               <GameData
                 fieldName="newCode"
                 items={newLevel.newCode}
@@ -140,10 +130,8 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               />
             </ContentWrapper>
 
-            <Label htmlFor="newMorphemes" className="mt-4">
-              New Morphemes
-            </Label>
-            <ContentWrapper className="mt-2">
+            <Label htmlFor="newMorphemes">New Morphemes</Label>
+            <ContentWrapper className="mt-1 mb-2">
               <GameData
                 fieldName="newMorphemes"
                 items={newLevel.newMorphemes}
@@ -157,10 +145,8 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               />
             </ContentWrapper>
 
-            <Label htmlFor="wordSets" className="mt-4">
-              Word Sets
-            </Label>
-            <ContentWrapper className="mt-2">
+            <Label htmlFor="wordSets">Word Sets</Label>
+            <ContentWrapper className="mt-1 mb-2">
               <GameData
                 fieldName="wordSets"
                 items={newLevel.wordSets}
@@ -171,10 +157,8 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               />
             </ContentWrapper>
 
-            <Label htmlFor="morphemeWordSets" className="mt-4">
-              Morpheme Word Sets
-            </Label>
-            <ContentWrapper className="mt-2">
+            <Label htmlFor="morphemeWordSets">Morpheme Word Sets</Label>
+            <ContentWrapper className="mt-1 mb-2">
               <GameData
                 fieldName="morphemeWordSets"
                 items={newLevel.morphemeWordSets}
@@ -188,10 +172,8 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               />
             </ContentWrapper>
 
-            <Label htmlFor="wordChains" className="mt-4">
-              Word Chains
-            </Label>
-            <ContentWrapper className="mt-2">
+            <Label htmlFor="wordChains">Word Chains</Label>
+            <ContentWrapper className="mt-1 mb-2">
               <GameData
                 fieldName="wordChains"
                 items={newLevel.wordChains}
@@ -205,10 +187,8 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               />
             </ContentWrapper>
 
-            <Label htmlFor="sentences" className="mt-4">
-              Sentences
-            </Label>
-            <ContentWrapper className="mt-2">
+            <Label htmlFor="sentences">Sentences</Label>
+            <ContentWrapper className="mt-1 mb-2">
               <GameData
                 fieldName="sentences"
                 items={newLevel.sentences}
@@ -222,10 +202,8 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               />
             </ContentWrapper>
 
-            <Label htmlFor="trickyWords" className="mt-4">
-              Tricky Words
-            </Label>
-            <ContentWrapper className="mt-2">
+            <Label htmlFor="trickyWords">Tricky Words</Label>
+            <ContentWrapper className="mt-1 mb-2">
               <GameData
                 fieldName="trickyWords"
                 items={newLevel.trickyWords}
@@ -239,9 +217,42 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               />
             </ContentWrapper>
 
-            <Label htmlFor="extra" className="mt-4">
-              Extra
-            </Label>
+            <Label htmlFor="extra">Extra</Label>
+            {newLevel.extra.map((extra, index) => (
+              <div key={index} className="relative mt-1 mb-2">
+                <Input
+                  id={`extra-${index}`}
+                  className="mt-2"
+                  value={extra}
+                  onChange={(e) => {
+                    const updatedExtra = [...newLevel.extra];
+                    updatedExtra[index] = e.target.value;
+                    setNewLevel({ ...newLevel, extra: updatedExtra });
+                  }}
+                />
+                <X
+                  size={16}
+                  className="absolute right-2 top-3 cursor-pointer"
+                  onClick={() => {
+                    const updatedExtra = newLevel.extra.filter(
+                      (_, i) => i !== index
+                    );
+                    setNewLevel({ ...newLevel, extra: updatedExtra });
+                  }}
+                />
+              </div>
+            ))}
+            <Input
+              className="mt-2"
+              value=""
+              placeholder="Add extra"
+              onChange={(e) =>
+                setNewLevel({
+                  ...newLevel,
+                  extra: [...newLevel.extra, e.target.value],
+                })
+              }
+            />
           </div>
         </NewLevelFormContainer>
         <DialogFooter>
