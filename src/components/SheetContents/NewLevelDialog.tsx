@@ -10,7 +10,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { ScopeAndSequenceLevel, WordItem } from "@/model";
+import {
+  Code,
+  Morpheme,
+  MorphemeWord,
+  ScopeAndSequenceLevel,
+  SentenceItem,
+  WordItem,
+} from "@/model";
 import { getNextId } from "@/utils";
 import { useState } from "react";
 import styled from "styled-components";
@@ -123,24 +130,31 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               New Code
             </Label>
             <ContentWrapper className="mt-2">
-              {/* <GameData
+              <GameData
                 fieldName="newCode"
-                levelData={newLevel}
-                updateLevel={setNewLevel}
+                items={newLevel.newCode}
+                onItemsChange={(newCode) =>
+                  setNewLevel({ ...newLevel, newCode: newCode as Code[] })
+                }
                 showAddButton
-              /> */}
+              />
             </ContentWrapper>
 
             <Label htmlFor="newMorphemes" className="mt-4">
               New Morphemes
             </Label>
             <ContentWrapper className="mt-2">
-              {/* <GameData
+              <GameData
                 fieldName="newMorphemes"
-                levelData={newLevel}
-                updateLevel={setNewLevel}
+                items={newLevel.newMorphemes}
+                onItemsChange={(newMorphemes) =>
+                  setNewLevel({
+                    ...newLevel,
+                    newMorphemes: newMorphemes as Morpheme[],
+                  })
+                }
                 showAddButton
-              /> */}
+              />
             </ContentWrapper>
 
             <Label htmlFor="wordSets" className="mt-4">
@@ -161,48 +175,68 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
               Morpheme Word Sets
             </Label>
             <ContentWrapper className="mt-2">
-              {/* <GameData
+              <GameData
                 fieldName="morphemeWordSets"
-                levelData={newLevel}
-                updateLevel={setNewLevel}
+                items={newLevel.morphemeWordSets}
+                onItemsChange={(morphemeWordSets) =>
+                  setNewLevel({
+                    ...newLevel,
+                    morphemeWordSets: morphemeWordSets as MorphemeWord[],
+                  })
+                }
                 showAddButton
-              /> */}
+              />
             </ContentWrapper>
 
             <Label htmlFor="wordChains" className="mt-4">
               Word Chains
             </Label>
             <ContentWrapper className="mt-2">
-              {/* <GameData
+              <GameData
                 fieldName="wordChains"
-                levelData={newLevel}
-                updateLevel={setNewLevel}
+                items={newLevel.wordChains}
+                onItemsChange={(wordChains) =>
+                  setNewLevel({
+                    ...newLevel,
+                    wordChains: wordChains as WordItem[],
+                  })
+                }
                 showAddButton
-              /> */}
+              />
             </ContentWrapper>
 
             <Label htmlFor="sentences" className="mt-4">
               Sentences
             </Label>
             <ContentWrapper className="mt-2">
-              {/* <GameData
+              <GameData
                 fieldName="sentences"
-                levelData={newLevel}
-                updateLevel={setNewLevel}
+                items={newLevel.sentences}
+                onItemsChange={(sentences) =>
+                  setNewLevel({
+                    ...newLevel,
+                    sentences: sentences as SentenceItem[],
+                  })
+                }
                 showAddButton
-              /> */}
+              />
             </ContentWrapper>
 
             <Label htmlFor="trickyWords" className="mt-4">
               Tricky Words
             </Label>
             <ContentWrapper className="mt-2">
-              {/* <GameData
+              <GameData
                 fieldName="trickyWords"
-                levelData={newLevel}
-                updateLevel={setNewLevel}
+                items={newLevel.trickyWords}
+                onItemsChange={(trickyWords) =>
+                  setNewLevel({
+                    ...newLevel,
+                    trickyWords: trickyWords as string[],
+                  })
+                }
                 showAddButton
-              /> */}
+              />
             </ContentWrapper>
 
             <Label htmlFor="extra" className="mt-4">
