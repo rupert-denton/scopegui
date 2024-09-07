@@ -24,7 +24,7 @@ export default function GameDataItem({
   } = useGameDataSheet();
 
   function handleClick() {
-    if (!item || !fieldName || !onItemChange) return;
+    if (item === undefined || !fieldName || !onItemChange) return;
     setFieldName(fieldName);
     setItem(item);
     setOnItemChange(() => onItemChange);

@@ -45,7 +45,7 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
   }
 
   function renderSheetContents(item: unknown) {
-    if (!updatedItem) setUpdatedItem(item);
+    if (updatedItem === null) setUpdatedItem(item);
 
     switch (fieldName) {
       case "newCode":
@@ -120,7 +120,7 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
     >
       <div>{children}</div>
       <SheetContent>
-        {item ? (
+        {item || typeof item === "string" ? (
           renderSheetContents(item) || (
             <SheetContentContainer>
               <SheetTitle>Unsupported Field</SheetTitle>
