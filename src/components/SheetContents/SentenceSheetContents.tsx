@@ -1,6 +1,6 @@
 import { SentenceItem } from "@/lib/model";
 import { SheetDescription, SheetTitle } from "../ui/sheet";
-import SheetContentContainer from "./SheetContentContainer";
+import { SheetContentContainer } from "../StyledComponents";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { X } from "lucide-react";

@@ -1,6 +1,6 @@
 import { Input } from "../ui/input";
 import { SheetDescription, SheetTitle } from "../ui/sheet";
-import SheetContentContainer from "./SheetContentContainer";
+import { SheetContentContainer } from "../StyledComponents";
 
 interface ExtraSheetContentsProps {
   updatedExtra: string | null;

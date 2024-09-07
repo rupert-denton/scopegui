@@ -1,11 +1,10 @@
 import { Morpheme, MorphemeWord } from "@/lib/model";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
-import SheetContentContainer from "./SheetContentContainer";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
 import NestedMorphemeSheet from "../NestedMorphemeSheet";
-import GameItemsContainer from "../GameItemsContainer";
+import { GameItemsContainer, SheetContentContainer } from "../StyledComponents";
 
 interface MorphemeWordSheetContentsProps {
   updatedMorphemeWord: MorphemeWord | null;

@@ -19,7 +19,7 @@ import TrickyWordSheetContents from "./SheetContents/TrickyWordSheetContents";
 import CodeSheetContents from "./SheetContents/CodeSheetContents";
 import MorphemeSheetContents from "./SheetContents/MorphemeSheetContents";
 import WordItemSheetContents from "./SheetContents/WordItemSheetContents";
-import SheetContentContainer from "./SheetContents/SheetContentContainer";
+import { SheetContentContainer } from "./StyledComponents";
 import SentenceSheetContents from "./SheetContents/SentenceSheetContents";
 import MorphemeWordSheetContents from "./SheetContents/MorphemeWordSheetContents";
 import useGameDataSheet from "@/hooks/useGameDataSheet";

@@ -1,13 +1,13 @@
 import { Code, WordItem } from "@/lib/model";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
-import SheetContentContainer from "./SheetContentContainer";
+import { SheetContentContainer } from "../StyledComponents";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
 import { Checkbox } from "../ui/checkbox";
 import { X } from "lucide-react";
 import NestedCodeSheet from "../NestedCodeSheet";
-import GameItemsContainer from "../GameItemsContainer";
+import { GameItemsContainer } from "../StyledComponents";
 
 interface WordItemSheetContentsProps {
   updatedWordItem: WordItem | null;

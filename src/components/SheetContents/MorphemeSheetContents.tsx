@@ -1,5 +1,5 @@
 import { Morpheme } from "@/lib/model";
-import SheetContentContainer from "./SheetContentContainer";
+import { SheetContentContainer } from "../StyledComponents";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";

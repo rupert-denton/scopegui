@@ -4,7 +4,7 @@ import useScopeAndSequence from "@/hooks/useScopeAndSequence";
 import GamesSelector from "./GamesSelector";
 import FocusSelector from "./FocusSelector";
 import GameDataItem from "./GameDataItem";
-import GameItemsContainer from "./GameItemsContainer";
+import { GameItemsContainer } from "./StyledComponents";
 
 interface LevelInfoProps {
   levelId: number;

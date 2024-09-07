@@ -1,7 +1,7 @@
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
-import SheetContentContainer from "./SheetContentContainer";
+import { SheetContentContainer } from "../StyledComponents";
 import { Code } from "@/lib/model";
 import PhonemeSelector from "../PhonemeSelector";
 
