@@ -46,7 +46,11 @@ export default function LevelContent({ levelData }: LevelContentProps) {
                     onItemsChange={(newValue) =>
                       newValue && updateLevel(levelData.id, { [key]: newValue })
                     }
-                    showAddButton={showAddForRow === key}
+                    showAddButton={
+                      showAddForRow === key &&
+                      key !== "cumulativeCode" &&
+                      key !== "cumulativeMorphemes"
+                    }
                   />
                 </div>
               ) : (
