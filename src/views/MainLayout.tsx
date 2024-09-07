@@ -9,6 +9,16 @@ export default function MainLayout() {
   const { scopeAndSequence, saveScopeAndSequence, unloadScopeAndSequence } =
     useScopeAndSequence();
 
+  function handleUnload() {
+    if (
+      window.confirm(
+        "Are you sure you want to unload? Any unsaved changes will be lost."
+      )
+    ) {
+      unloadScopeAndSequence();
+    }
+  }
+
   return (
     <MainLayoutContainer>
       <Header>
@@ -20,7 +30,7 @@ export default function MainLayout() {
               <Download size={16} />
               Save
             </Button>
-            <Button variant="destructive" onClick={unloadScopeAndSequence}>
+            <Button variant="destructive" onClick={handleUnload}>
               Unload
             </Button>
           </StatusContainer>
