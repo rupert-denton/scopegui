@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { ScopeAndSequenceLevel } from "@/model";
+import { ScopeAndSequenceLevel, WordItem } from "@/model";
 import { getNextId } from "@/utils";
 import { useState } from "react";
 import styled from "styled-components";
@@ -149,8 +149,10 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
             <ContentWrapper className="mt-2">
               <GameData
                 fieldName="wordSets"
-                levelData={newLevel}
-                updateLevel={setNewLevel}
+                items={newLevel.wordSets}
+                onItemsChange={(wordSets) =>
+                  setNewLevel({ ...newLevel, wordSets: wordSets as WordItem[] })
+                }
                 showAddButton
               />
             </ContentWrapper>

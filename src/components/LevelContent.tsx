@@ -41,8 +41,10 @@ export default function LevelContent({ levelData }: LevelContentProps) {
                 <div className="min-h-12">
                   <GameData
                     fieldName={key as keyof ScopeAndSequenceLevel}
-                    levelData={levelData}
-                    updateLevel={(updated) => updateLevel(value.id, updated)}
+                    items={value}
+                    onItemsChange={(newValue) =>
+                      newValue && updateLevel(levelData.id, { [key]: newValue })
+                    }
                     showAddButton={showAddForRow === key}
                   />
                 </div>

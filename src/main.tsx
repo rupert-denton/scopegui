@@ -6,6 +6,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MainLayout from "./views/MainLayout.tsx";
 import MainView from "./views/MainView.tsx";
 import ErrorView from "./views/ErrorView.tsx";
+import { GameDataSheetProvider } from "./hooks/GameDataSheetContext.tsx";
+import GameDataSheet from "./components/GameDataSheet.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,8 +25,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ScopeAndSequenceProvider>
-      <RouterProvider router={router} />
-    </ScopeAndSequenceProvider>
+    <GameDataSheetProvider>
+      <ScopeAndSequenceProvider>
+        <GameDataSheet>
+          <RouterProvider router={router} />
+        </GameDataSheet>
+      </ScopeAndSequenceProvider>
+    </GameDataSheetProvider>
   </StrictMode>
 );

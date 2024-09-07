@@ -1,5 +1,3 @@
-import styled from "styled-components";
-import GameDataItem from "./GameDataItem";
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
@@ -26,14 +24,6 @@ export default function LevelInfo({
         value={value as string[]}
         onChange={(newValue) => updateLevel(levelId, { games: newValue })}
       />
-    );
-  } else if (Array.isArray(value)) {
-    return (
-      <LevelInfoContainer>
-        {value.map((item, index) => (
-          <GameDataItem key={index} value={item} />
-        ))}
-      </LevelInfoContainer>
     );
   } else if (fieldName === "focus") {
     return (
@@ -70,9 +60,3 @@ export default function LevelInfo({
     );
   }
 }
-
-const LevelInfoContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-`;

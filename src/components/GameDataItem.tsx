@@ -1,11 +1,31 @@
+import useGameDataSheet from "@/hooks/useGameDataSheet";
 import styled from "styled-components";
 
 interface GameDataItemProps {
   value: string;
+  fieldName?: string;
+  item?: unknown;
+  onItemChange?: (newItem: unknown) => void;
 }
-export default function GameDataItem({ value }: GameDataItemProps) {
+export default function GameDataItem({
+  value,
+  fieldName,
+  item,
+  onItemChange,
+}: GameDataItemProps) {
+  const { setOpen, setFieldName, setItem, setOnItemChange } =
+    useGameDataSheet();
+
+  function handleClick() {
+    if (!item || !fieldName || !onItemChange) return;
+    setFieldName(fieldName);
+    setItem(item);
+    setOnItemChange(() => onItemChange);
+    setOpen(true);
+  }
+
   return (
-    <GameDataItemContainer>
+    <GameDataItemContainer onClick={handleClick}>
       <GameDataItemValue>{value}</GameDataItemValue>
     </GameDataItemContainer>
   );

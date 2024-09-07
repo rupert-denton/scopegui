@@ -1,50 +1,46 @@
 import styled from "styled-components";
 import { ScopeAndSequenceLevel } from "../model.ts";
 import GameDataItem from "./GameDataItem.tsx";
-import GameDataSheet from "./GameDataSheet.tsx";
 import { createGameItem } from "@/utils.ts";
-import { useMemo } from "react";
 
 interface GameDataProps {
   fieldName: keyof ScopeAndSequenceLevel;
-  levelData: ScopeAndSequenceLevel;
-  updateLevel: (updatedLevel: ScopeAndSequenceLevel) => void;
+  items: unknown[];
+  onItemsChange: (newValue: unknown[]) => void;
   showAddButton?: boolean;
 }
 export default function GameData({
   fieldName,
-  levelData,
-  updateLevel,
+  items,
+  onItemsChange,
   showAddButton = false,
 }: GameDataProps) {
-  const newGameItem = useMemo(() => createGameItem(fieldName), [fieldName]);
-
   const renderField = () => {
-    if (!levelData[fieldName] || !Array.isArray(levelData[fieldName])) {
+    if (!items || !Array.isArray(items)) {
       return <p>No data available</p>;
     }
 
     switch (fieldName) {
       case "newCode":
       case "cumulativeCode":
-        return renderItemList(levelData[fieldName], "spelling");
+        return renderItemList(items, "spelling");
 
       case "newMorphemes":
       case "cumulativeMorphemes":
-        return renderItemList(levelData[fieldName], "morpheme");
+        return renderItemList(items, "morpheme");
 
       case "wordSets":
       case "wordChains":
-        return renderItemList(levelData[fieldName], "word");
+        return renderItemList(items, "word");
 
       case "morphemeWordSets":
-        return renderItemList(levelData[fieldName], "word");
+        return renderItemList(items, "word");
 
       case "sentences":
-        return renderItemList(levelData[fieldName], "sentence");
+        return renderItemList(items, "sentence");
 
       case "trickyWords":
-        return renderItemList(levelData[fieldName]);
+        return renderItemList(items);
 
       default:
         return <p>Unsupported field</p>;
@@ -55,31 +51,28 @@ export default function GameData({
     return (
       <>
         {items.map((item, index) => (
-          <GameDataSheet
+          <GameDataItem
             key={index}
+            value={(displayKey ? item[displayKey as keyof T] : item) as string}
             fieldName={fieldName}
             item={item}
-            index={index}
-            levelData={levelData}
-            updateLevel={updateLevel}
-          >
-            <GameDataItem
-              value={
-                (displayKey ? item[displayKey as keyof T] : item) as string
-              }
-            />
-          </GameDataSheet>
+            onItemChange={(newItem) =>
+              newItem &&
+              onItemsChange(
+                items.map((i, iIndex) => (iIndex === index ? newItem : i))
+              )
+            }
+          />
         ))}
         {showAddButton && (
-          <GameDataSheet
+          <GameDataItem
+            value="+"
             fieldName={fieldName}
-            index={items.length}
-            levelData={levelData}
-            item={newGameItem}
-            updateLevel={updateLevel}
-          >
-            <GameDataItem value="+" />
-          </GameDataSheet>
+            item={createGameItem(fieldName)}
+            onItemChange={(newItem) =>
+              newItem && onItemsChange([...items, newItem])
+            }
+          />
         )}
       </>
     );

@@ -1,11 +1,4 @@
-import {
-  Code,
-  Morpheme,
-  MorphemeWord,
-  ScopeAndSequenceLevel,
-  SentenceItem,
-  WordItem,
-} from "@/model";
+import { Code, Morpheme, MorphemeWord, SentenceItem, WordItem } from "@/model";
 import {
   Sheet,
   SheetClose,
@@ -13,7 +6,6 @@ import {
   SheetDescription,
   SheetFooter,
   SheetTitle,
-  SheetTrigger,
 } from "./ui/sheet";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -24,131 +16,80 @@ import WordItemSheetContents from "./SheetContents/WordItemSheetContents";
 import SheetContentContainer from "./SheetContents/SheetContentContainer";
 import SentenceSheetContents from "./SheetContents/SentenceSheetContents";
 import MorphemeWordSheetContents from "./SheetContents/MorphemeWordSheetContents";
+import useGameDataSheet from "@/hooks/useGameDataSheet";
 
 interface GameDataSheetProps {
-  fieldName: string;
-  item: unknown;
-  index: number;
-  levelData: ScopeAndSequenceLevel;
-  updateLevel: (updatedLevel: ScopeAndSequenceLevel) => void;
   children?: React.ReactNode;
 }
-export default function GameDataSheet({
-  fieldName,
-  item,
-  index,
-  levelData,
-  updateLevel,
-  children,
-}: GameDataSheetProps) {
-  const [updatedCode, setUpdatedCode] = useState<Code | null>(null);
-  const [updatedMorpheme, setUpdatedMorpheme] = useState<Morpheme | null>(null);
-  const [updatedWordItem, setUpdatedWordItem] = useState<WordItem | null>(null);
-  const [updatedMorphemeWord, setUpdatedMorphemeWord] =
-    useState<MorphemeWord | null>(null);
-  const [updatedSentence, setUpdatedSentence] = useState<SentenceItem | null>(
-    null
-  );
-  const [updatedTrickyWord, setUpdatedTrickyWord] = useState<string | null>(
-    null
-  );
+export default function GameDataSheet({ children }: GameDataSheetProps) {
+  const {
+    open,
+    setOpen,
+    fieldName,
+    setFieldName,
+    item,
+    setItem,
+    onItemChange,
+    setOnItemChange,
+  } = useGameDataSheet();
+  const [updatedItem, setUpdatedItem] = useState<unknown>(null);
 
   function saveChanges() {
-    if (!levelData) return;
-
-    const newLevel = { ...levelData };
-
-    switch (fieldName) {
-      case "newCode":
-      case "cumulativeCode":
-        if (!updatedCode) return;
-        newLevel[fieldName][index] = updatedCode;
-        break;
-      case "newMorphemes":
-      case "cumulativeMorphemes":
-        if (!updatedMorpheme) return;
-        newLevel[fieldName][index] = updatedMorpheme;
-        break;
-      case "wordSets":
-      case "wordChains":
-        if (!updatedWordItem) return;
-        newLevel[fieldName][index] = updatedWordItem;
-        break;
-      case "morphemeWordSets":
-        if (!updatedMorphemeWord) return;
-        newLevel[fieldName][index] = updatedMorphemeWord;
-        break;
-      case "sentences":
-        if (!updatedSentence) return;
-        newLevel[fieldName][index] = updatedSentence;
-        break;
-      case "trickyWords":
-        if (!updatedTrickyWord) return;
-        newLevel[fieldName][index] = updatedTrickyWord;
-        break;
-      default:
-        return;
-    }
-
-    updateLevel(newLevel);
+    if (updatedItem && onItemChange) onItemChange(updatedItem);
   }
 
   function renderSheetContents(item: unknown) {
+    if (!updatedItem) setUpdatedItem(item);
+
     switch (fieldName) {
       case "newCode":
       case "cumulativeCode":
-        if (!updatedCode) setUpdatedCode(item as Code);
         return (
           <CodeSheetContents
-            updatedCode={updatedCode}
-            setUpdatedCode={setUpdatedCode}
+            updatedCode={updatedItem as Code}
+            setUpdatedCode={setUpdatedItem}
           />
         );
 
       case "newMorphemes":
       case "cumulativeMorphemes":
-        if (!updatedMorpheme) setUpdatedMorpheme(item as Morpheme);
         return (
           <MorphemeSheetContents
-            updatedMorpheme={updatedMorpheme}
-            setUpdatedMorpheme={setUpdatedMorpheme}
+            updatedMorpheme={updatedItem as Morpheme}
+            setUpdatedMorpheme={setUpdatedItem}
           />
         );
 
       case "wordSets":
       case "wordChains":
-        if (!updatedWordItem) setUpdatedWordItem(item as WordItem);
         return (
           <WordItemSheetContents
-            updatedWordItem={updatedWordItem}
-            setUpdatedWordItem={setUpdatedWordItem}
+            updatedWordItem={updatedItem as WordItem}
+            setUpdatedWordItem={setUpdatedItem}
           />
         );
 
       case "morphemeWordSets":
-        if (!updatedMorphemeWord) setUpdatedMorphemeWord(item as MorphemeWord);
         return (
           <MorphemeWordSheetContents
-            updatedMorphemeWord={updatedMorphemeWord}
-            setUpdatedMorphemeWord={setUpdatedMorphemeWord}
+            updatedMorphemeWord={updatedItem as MorphemeWord}
+            setUpdatedMorphemeWord={setUpdatedItem}
           />
         );
 
       case "sentences":
-        if (!updatedSentence) setUpdatedSentence(item as SentenceItem);
         return (
           <SentenceSheetContents
-            updatedSentence={updatedSentence}
-            setUpdatedSentence={setUpdatedSentence}
+            updatedSentence={updatedItem as SentenceItem}
+            setUpdatedSentence={setUpdatedItem}
           />
         );
 
       case "trickyWords":
-        if (!updatedTrickyWord) setUpdatedTrickyWord(item as string);
         return (
           <TrickyWordSheetContents
-            updatedTrickyWord={updatedTrickyWord}
-            setUpdatedTrickyWord={setUpdatedTrickyWord}
+            updatedTrickyWord={updatedItem as string}
+            setUpdatedTrickyWord={setUpdatedItem}
           />
         );
 
@@ -159,24 +100,33 @@ export default function GameDataSheet({
 
   return (
     <Sheet
+      open={open}
       onOpenChange={(open) => {
         if (!open) {
-          setUpdatedCode(null);
-          setUpdatedMorpheme(null);
-          setUpdatedWordItem(null);
-          setUpdatedMorphemeWord(null);
-          setUpdatedSentence(null);
-          setUpdatedTrickyWord(null);
+          setUpdatedItem(null);
+          setItem(null);
+          setFieldName(null);
+          setOnItemChange(null);
+          setOpen(false);
         }
       }}
     >
-      <SheetTrigger>{children}</SheetTrigger>
+      <div>{children}</div>
       <SheetContent>
-        {renderSheetContents(item) || (
+        {item ? (
+          renderSheetContents(item) || (
+            <SheetContentContainer>
+              <SheetTitle>Unsupported Field</SheetTitle>
+              <SheetDescription>
+                The field type {fieldName} isn't supported yet.
+              </SheetDescription>
+            </SheetContentContainer>
+          )
+        ) : (
           <SheetContentContainer>
-            <SheetTitle>Unsupported Field</SheetTitle>
+            <SheetTitle>Item not found</SheetTitle>
             <SheetDescription>
-              The field type {fieldName} isn't supported yet.
+              Could not find the item you're looking for.
             </SheetDescription>
           </SheetContentContainer>
         )}
