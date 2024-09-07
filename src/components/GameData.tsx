@@ -1,6 +1,6 @@
-import { ScopeAndSequenceLevel } from "../model.ts";
+import { ScopeAndSequenceLevel } from "../lib/model.ts";
 import GameDataItem from "./GameDataItem.tsx";
-import { createGameItem } from "@/utils.ts";
+import { createGameItem } from "@/lib/utils.ts";
 import GameItemsContainer from "./GameItemsContainer.tsx";
 
 interface GameDataProps {

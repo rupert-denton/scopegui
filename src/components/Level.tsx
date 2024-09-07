@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { ScopeAndSequenceLevel } from "../model";
+import { ScopeAndSequenceLevel } from "../lib/model";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { CaretRight, DotsSixVertical } from "@phosphor-icons/react";
 import { useState } from "react";
 import LevelContent from "./LevelContent";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
-import { assignLevelNumbers, reassignCumulativeItems } from "@/utils";
+import { assignLevelNumbers, reassignCumulativeItems } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 
 interface LevelProps {

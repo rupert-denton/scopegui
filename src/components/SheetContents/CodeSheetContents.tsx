@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { Input } from "../ui/input";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
 import SheetContentContainer from "./SheetContentContainer";
-import { Code } from "@/model";
+import { Code } from "@/lib/model";
 
 interface CodeSheetContentsProps {
   updatedCode: Code | null;

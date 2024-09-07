@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Info, Plus, RefreshCcw } from "lucide-react";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
-import { reassignCumulativeItems } from "@/utils";
+import { reassignCumulativeItems } from "@/lib/utils";
 import NewLevelDialog from "./SheetContents/NewLevelDialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 

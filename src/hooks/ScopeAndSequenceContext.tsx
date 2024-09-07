@@ -1,11 +1,11 @@
 import { createContext, useState } from "react";
-import { ScopeAndSequence, ScopeAndSequenceLevel } from "../model";
+import { ScopeAndSequence, ScopeAndSequenceLevel } from "../lib/model";
 import semver from "semver";
 import {
   getFromLocalStorage,
   saveToLocalStorage,
   assignLevelNumbers,
-} from "../utils";
+} from "@/lib/utils";
 
 interface ScopeAndSequenceContextType {
   scopeAndSequence: ScopeAndSequence | null;

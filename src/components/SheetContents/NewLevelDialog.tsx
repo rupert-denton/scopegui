@@ -17,12 +17,12 @@ import {
   ScopeAndSequenceLevel,
   SentenceItem,
   WordItem,
-} from "@/model";
+} from "@/lib/model";
 import {
   assignLevelNumbers,
   getNextId,
   reassignCumulativeItems,
-} from "@/utils";
+} from "@/lib/utils";
 import { useState } from "react";
 import styled from "styled-components";
 import { Label } from "../ui/label";

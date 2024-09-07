@@ -1,7 +1,7 @@
-import { games } from "@/model";
+import { games } from "@/lib/constants";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
-import { getPrettyGameName } from "@/utils";
+import { getPrettyGameName } from "@/lib/utils";
 import styled from "styled-components";
 
 interface GamesSelectorProps {

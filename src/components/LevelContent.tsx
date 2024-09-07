@@ -6,7 +6,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { gameDataFields, ScopeAndSequenceLevel } from "../model";
+import { ScopeAndSequenceLevel } from "../lib/model";
+import { gameDataFields } from "@/lib/constants";
 import GameData from "./GameData";
 import LevelInfo from "./LevelInfo";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";

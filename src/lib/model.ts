@@ -25,28 +25,6 @@ export interface ScopeAndSequenceLevel {
   trickyWords: string[];
 }
 
-export const gameDataFields = [
-  "newCode",
-  "cumulativeCode",
-  "newMorphemes",
-  "cumulativeMorphemes",
-  "wordSets",
-  "morphemeWordSets",
-  "wordChains",
-  "sentences",
-  "trickyWords",
-];
-
-export const games = [
-  "mysticMatch",
-  "wordWeaver",
-  "phonemeForge",
-  "trickyWords",
-  "sentenceBuilder",
-  "wordRifts",
-  "wordSums",
-];
-
 export interface Code {
   spelling: string;
   phoneme: string[] | string;
