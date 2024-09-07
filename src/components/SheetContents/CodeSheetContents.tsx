@@ -1,9 +1,9 @@
 import { Label } from "../ui/label";
-import { X } from "lucide-react";
 import { Input } from "../ui/input";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
 import SheetContentContainer from "./SheetContentContainer";
 import { Code } from "@/lib/model";
+import PhonemeSelector from "../PhonemeSelector";
 
 interface CodeSheetContentsProps {
   updatedCode: Code | null;
@@ -33,59 +33,38 @@ export default function CodeSheetContents({
           <Label htmlFor="phoneme" className="mt-2">
             Phoneme(s)
           </Label>
-          {Array.isArray(updatedCode.phoneme) ? (
-            <>
-              {updatedCode.phoneme.map((phoneme, index) => (
-                <div key={index} className="relative">
-                  <Input
-                    className="mt-2"
-                    value={phoneme}
-                    onChange={(e) =>
-                      setUpdatedCode({
-                        ...updatedCode,
-                        phoneme: (updatedCode.phoneme as string[]).map((p, i) =>
-                          i === index ? e.target.value : p
-                        ),
-                      })
-                    }
-                  />
-                  <X
-                    size={16}
-                    className="absolute right-2 top-5 cursor-pointer"
-                    onClick={() => {
-                      setUpdatedCode({
-                        ...updatedCode,
-                        phoneme: (updatedCode.phoneme as string[]).filter(
-                          (_, i) => i !== index
-                        ),
-                      });
-                    }}
-                  />
-                </div>
-              ))}
-              <Input
-                id="phoneme"
-                className="mt-2 mb-2"
-                value={""}
-                placeholder="Add phoneme"
-                onChange={(e) =>
-                  setUpdatedCode({
-                    ...updatedCode,
-                    phoneme: [...updatedCode.phoneme, e.target.value],
-                  })
-                }
-              />
-            </>
-          ) : (
-            <Input
-              id="phoneme"
-              className="mt-4 mb-4"
-              value={updatedCode?.phoneme || ""}
-              onChange={(e) =>
-                setUpdatedCode({ ...updatedCode, phoneme: e.target.value })
+          {(Array.isArray(updatedCode.phoneme)
+            ? updatedCode.phoneme
+            : [updatedCode.phoneme]
+          ).map((phoneme, index) => (
+            <PhonemeSelector
+              key={index}
+              phoneme={phoneme}
+              onPhonemeChange={(newValue) =>
+                setUpdatedCode({
+                  ...updatedCode,
+                  phoneme: newValue
+                    ? (updatedCode.phoneme as string[]).map((v, i) =>
+                        i === index ? newValue : v
+                      )
+                    : (updatedCode.phoneme as string[]).filter(
+                        (_, i) => i !== index
+                      ),
+                })
               }
             />
-          )}
+          ))}
+          <PhonemeSelector
+            phoneme=""
+            onPhonemeChange={(newValue) =>
+              newValue &&
+              setUpdatedCode({
+                ...updatedCode,
+                phoneme: [...updatedCode.phoneme, newValue],
+              })
+            }
+            hideDelete
+          />
         </SheetContentContainer>
       )}
     </>

@@ -20,7 +20,7 @@ export const games = [
   "wordSums",
 ];
 
-export const phonemes = [
+export const allPhonemes = [
   "æ",
   "aʊ",
   "b",
