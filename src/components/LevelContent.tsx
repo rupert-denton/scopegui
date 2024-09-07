@@ -36,7 +36,7 @@ export default function LevelContent({ levelData }: LevelContentProps) {
             onMouseLeave={() => setShowAddForRow(null)}
           >
             <TableCell className="font-medium">{key}</TableCell>
-            <TableCell>
+            <TableCell className="w-[70%]">
               {gameDataFields.includes(key) ? (
                 <div className="min-h-12">
                   <GameData
