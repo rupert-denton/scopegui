@@ -1,5 +1,5 @@
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
-import { Button } from "../ui/button";
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogClose,
@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "./ui/dialog";
 import {
   Code,
   Morpheme,
@@ -25,12 +25,12 @@ import {
 } from "@/lib/utils";
 import { useState } from "react";
 import styled from "styled-components";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import GamesSelector from "../GamesSelector";
-import FocusSelector from "../FocusSelector";
-import GameData from "../GameData";
-import { ScrollArea } from "../ui/scroll-area";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import GamesSelector from "./GamesSelector";
+import FocusSelector from "./FocusSelector";
+import GameData from "./GameData";
+import { ScrollArea } from "./ui/scroll-area";
 import { X } from "lucide-react";
 
 interface NewLevelDialogProps {
