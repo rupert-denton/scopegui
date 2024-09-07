@@ -43,7 +43,6 @@ const GameDataItemContainer = styled.div`
   border: 1px solid #000;
   border-radius: 3px;
   padding: 8px;
-  margin: 5px;
   text-align: center;
   min-width: 30px;
   min-height: 15px;

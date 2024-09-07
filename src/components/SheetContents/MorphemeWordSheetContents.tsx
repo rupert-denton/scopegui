@@ -109,5 +109,5 @@ export default function MorphemeWordSheetContainer({
 const MorphemesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.1rem;
+  gap: 0.5rem;
 `;
