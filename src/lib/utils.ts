@@ -68,6 +68,28 @@ export function getNextId(data: ScopeAndSequenceLevel[]) {
   return data.reduce((maxId, level) => Math.max(maxId, level.id), 0) + 1;
 }
 
+export function getNewLevel(id: number) {
+  return {
+    id,
+    level: 1,
+    tier: 1,
+    levelInfo: "New Level",
+    games: [],
+    focus: "phonics",
+    extra: [],
+
+    newCode: [],
+    newMorphemes: [],
+    cumulativeCode: [],
+    cumulativeMorphemes: [],
+    wordSets: [],
+    morphemeWordSets: [],
+    wordChains: [],
+    sentences: [],
+    trickyWords: [],
+  };
+}
+
 export function getPrettyGameName(game: string) {
   switch (game) {
     case "mysticMatch":
