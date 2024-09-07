@@ -61,12 +61,20 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
   function handleSave() {
     if (!updatedScopeAndSequence) return;
 
-    const updatedData = updatedScopeAndSequence.data.reduce((acc, level) => {
-      if (level.level === newLevel.level) {
-        return [...acc, newLevel, level];
-      }
-      return [...acc, level];
-    }, [] as ScopeAndSequenceLevel[]);
+    let updatedData = [...updatedScopeAndSequence.data];
+
+    if (updatedData.some((level) => level.level === newLevel.level)) {
+      // Insert new level before the existing level
+      updatedData = updatedScopeAndSequence.data.reduce((acc, level) => {
+        if (level.level === newLevel.level) {
+          return [...acc, newLevel, level];
+        }
+        return [...acc, level];
+      }, [] as ScopeAndSequenceLevel[]);
+    } else {
+      // Append new level to the end
+      updatedData = [...updatedData, newLevel];
+    }
 
     setUpdatedData(reassignCumulativeItems(assignLevelNumbers(updatedData)));
   }
