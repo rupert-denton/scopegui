@@ -6,21 +6,29 @@ interface GameDataItemProps {
   fieldName?: string;
   item?: unknown;
   onItemChange?: (newItem: unknown) => void;
+  showDeleteButton?: boolean;
 }
 export default function GameDataItem({
   value,
   fieldName,
   item,
   onItemChange,
+  showDeleteButton = false,
 }: GameDataItemProps) {
-  const { setOpen, setFieldName, setItem, setOnItemChange } =
-    useGameDataSheet();
+  const {
+    setOpen,
+    setFieldName,
+    setItem,
+    setOnItemChange,
+    setShowDeleteButton,
+  } = useGameDataSheet();
 
   function handleClick() {
     if (!item || !fieldName || !onItemChange) return;
     setFieldName(fieldName);
     setItem(item);
     setOnItemChange(() => onItemChange);
+    setShowDeleteButton(showDeleteButton);
     setOpen(true);
   }
 

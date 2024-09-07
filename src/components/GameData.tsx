@@ -63,6 +63,7 @@ export default function GameData({
                   )
                 : onItemsChange(items.filter((_, iIndex) => iIndex !== index))
             }
+            showDeleteButton
           />
         ))}
         {showAddButton && (

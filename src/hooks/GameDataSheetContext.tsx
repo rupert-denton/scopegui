@@ -14,6 +14,9 @@ interface GameDataSheetContextType {
   setOnItemChange: (
     newOnItemChange: ((newItem: unknown) => void) | null
   ) => void;
+
+  showDeleteButton: boolean;
+  setShowDeleteButton: (showDeleteButton: boolean) => void;
 }
 
 export const GameDataSheetContext =
@@ -31,6 +34,7 @@ export function GameDataSheetProvider({
   const [onItemChange, setOnItemChange] = useState<
     ((newItem: unknown) => void) | null
   >(null);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
 
   return (
     <GameDataSheetContext.Provider
@@ -43,6 +47,8 @@ export function GameDataSheetProvider({
         setItem,
         onItemChange,
         setOnItemChange,
+        showDeleteButton,
+        setShowDeleteButton,
       }}
     >
       {children}

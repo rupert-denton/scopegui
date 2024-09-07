@@ -31,6 +31,8 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
     setItem,
     onItemChange,
     setOnItemChange,
+    showDeleteButton,
+    setShowDeleteButton,
   } = useGameDataSheet();
   const [updatedItem, setUpdatedItem] = useState<unknown>(null);
 
@@ -107,11 +109,12 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
       open={open}
       onOpenChange={(open) => {
         if (!open) {
+          setOpen(false);
           setUpdatedItem(null);
           setItem(null);
           setFieldName(null);
           setOnItemChange(null);
-          setOpen(false);
+          setShowDeleteButton(false);
         }
       }}
     >
@@ -139,11 +142,13 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
           <SheetClose asChild>
             <Button variant="outline">Cancel</Button>
           </SheetClose>
-          <SheetClose asChild>
-            <Button variant="destructive" onClick={handleDelete}>
-              Delete
-            </Button>
-          </SheetClose>
+          {showDeleteButton && (
+            <SheetClose asChild>
+              <Button variant="destructive" onClick={handleDelete}>
+                Delete
+              </Button>
+            </SheetClose>
+          )}
           <SheetClose asChild>
             <Button onClick={handleSave}>Save changes</Button>
           </SheetClose>

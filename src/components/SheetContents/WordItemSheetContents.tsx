@@ -27,6 +27,14 @@ export default function WordItemSheetContents({
     });
   }
 
+  function handleDeleteCode(index: number) {
+    if (!updatedWordItem) return;
+    setUpdatedWordItem({
+      ...updatedWordItem,
+      phonemes: updatedWordItem.phonemes.filter((_, i) => i !== index),
+    });
+  }
+
   return (
     <>
       <SheetTitle>Word Item</SheetTitle>
@@ -53,7 +61,12 @@ export default function WordItemSheetContents({
               <NestedCodeSheet
                 key={index}
                 code={code}
-                onSave={(updatedCode) => handleSaveCode(index, updatedCode)}
+                onSave={(updatedCode) =>
+                  updatedCode
+                    ? handleSaveCode(index, updatedCode)
+                    : handleDeleteCode(index)
+                }
+                showDeleteButton
               >
                 <GameDataItem value={code.spelling} />
               </NestedCodeSheet>
@@ -61,6 +74,7 @@ export default function WordItemSheetContents({
             <NestedCodeSheet
               code={{ spelling: "", phoneme: [] }}
               onSave={(newCode) =>
+                newCode &&
                 setUpdatedWordItem({
                   ...updatedWordItem,
                   phonemes: [...updatedWordItem.phonemes, newCode],

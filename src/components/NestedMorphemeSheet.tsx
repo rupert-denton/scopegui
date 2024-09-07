@@ -12,12 +12,14 @@ import { Button } from "./ui/button";
 
 interface NestedMorphemeSheetProps {
   morpheme: Morpheme;
-  onSave: (morpheme: Morpheme) => void;
+  onSave: (morpheme: Morpheme | null) => void;
+  showDeleteButton?: boolean;
   children?: React.ReactNode;
 }
 export default function NestedMorphemeSheet({
   morpheme,
   onSave,
+  showDeleteButton = false,
   children,
 }: NestedMorphemeSheetProps) {
   const [updatedMorpheme, setUpdatedMorpheme] = useState<Morpheme>(morpheme);
@@ -36,6 +38,13 @@ export default function NestedMorphemeSheet({
           <SheetClose asChild>
             <Button variant="outline">Cancel</Button>
           </SheetClose>
+          {showDeleteButton && (
+            <SheetClose asChild>
+              <Button variant="destructive" onClick={() => onSave(null)}>
+                Delete
+              </Button>
+            </SheetClose>
+          )}
           <SheetClose asChild>
             <Button onClick={() => onSave(updatedMorpheme)}>
               Save Changes

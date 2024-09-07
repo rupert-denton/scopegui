@@ -25,6 +25,14 @@ export default function MorphemeWordSheetContainer({
     });
   }
 
+  function handleDeleteMorpheme(index: number) {
+    if (!updatedMorphemeWord) return;
+    setUpdatedMorphemeWord({
+      ...updatedMorphemeWord,
+      morphemes: updatedMorphemeWord.morphemes.filter((_, i) => i !== index),
+    });
+  }
+
   return (
     <>
       <SheetTitle>Word Item</SheetTitle>
@@ -55,8 +63,11 @@ export default function MorphemeWordSheetContainer({
                 key={index}
                 morpheme={morpheme}
                 onSave={(updatedMorpheme) =>
-                  handleSaveMorpheme(index, updatedMorpheme)
+                  updatedMorpheme
+                    ? handleSaveMorpheme(index, updatedMorpheme)
+                    : handleDeleteMorpheme(index)
                 }
+                showDeleteButton
               >
                 <GameDataItem value={morpheme.morpheme} />
               </NestedMorphemeSheet>
@@ -64,6 +75,7 @@ export default function MorphemeWordSheetContainer({
             <NestedMorphemeSheet
               morpheme={{ morpheme: "", type: "base" }}
               onSave={(newMorpheme) =>
+                newMorpheme &&
                 setUpdatedMorphemeWord({
                   ...updatedMorphemeWord,
                   morphemes: [...updatedMorphemeWord.morphemes, newMorpheme],
