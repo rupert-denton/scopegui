@@ -4,8 +4,8 @@ import SheetContentContainer from "./SheetContentContainer";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
-import styled from "styled-components";
 import NestedMorphemeSheet from "../NestedMorphemeSheet";
+import GameItemsContainer from "../GameItemsContainer";
 
 interface MorphemeWordSheetContentsProps {
   updatedMorphemeWord: MorphemeWord | null;
@@ -57,7 +57,7 @@ export default function MorphemeWordSheetContainer({
           <Label htmlFor="morphemes" className="mt-4">
             Morphemes
           </Label>
-          <MorphemesContainer className="mt-2">
+          <GameItemsContainer className="mt-2">
             {updatedMorphemeWord.morphemes.map((morpheme, index) => (
               <NestedMorphemeSheet
                 key={index}
@@ -84,7 +84,7 @@ export default function MorphemeWordSheetContainer({
             >
               <GameDataItem value="+" />
             </NestedMorphemeSheet>
-          </MorphemesContainer>
+          </GameItemsContainer>
 
           <Label htmlFor="example" className="mt-4">
             Example
@@ -105,9 +105,3 @@ export default function MorphemeWordSheetContainer({
     </>
   );
 }
-
-const MorphemesContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-`;

@@ -17,6 +17,7 @@ import SheetContentContainer from "./SheetContents/SheetContentContainer";
 import SentenceSheetContents from "./SheetContents/SentenceSheetContents";
 import MorphemeWordSheetContents from "./SheetContents/MorphemeWordSheetContents";
 import useGameDataSheet from "@/hooks/useGameDataSheet";
+import ExtraSheetContents from "./SheetContents/ExtraSheetContents";
 
 interface GameDataSheetProps {
   children?: React.ReactNode;
@@ -96,6 +97,14 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
           <TrickyWordSheetContents
             updatedTrickyWord={updatedItem as string}
             setUpdatedTrickyWord={setUpdatedItem}
+          />
+        );
+
+      case "extra":
+        return (
+          <ExtraSheetContents
+            updatedExtra={updatedItem as string}
+            setUpdatedExtra={setUpdatedItem}
           />
         );
 

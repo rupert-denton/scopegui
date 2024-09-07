@@ -53,6 +53,7 @@ export default function LevelContent({ levelData }: LevelContentProps) {
                   levelId={levelData.id}
                   fieldName={key}
                   value={value}
+                  showAddButton={showAddForRow === key}
                 />
               )}
             </TableCell>

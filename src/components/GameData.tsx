@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import { ScopeAndSequenceLevel } from "../model.ts";
 import GameDataItem from "./GameDataItem.tsx";
 import { createGameItem } from "@/utils.ts";
+import GameItemsContainer from "./GameItemsContainer.tsx";
 
 interface GameDataProps {
   fieldName: keyof ScopeAndSequenceLevel;
@@ -15,41 +15,9 @@ export default function GameData({
   onItemsChange,
   showAddButton = false,
 }: GameDataProps) {
-  const renderField = () => {
-    if (!items || !Array.isArray(items)) {
-      return <p>No data available</p>;
-    }
-
-    switch (fieldName) {
-      case "newCode":
-      case "cumulativeCode":
-        return renderItemList(items, "spelling");
-
-      case "newMorphemes":
-      case "cumulativeMorphemes":
-        return renderItemList(items, "morpheme");
-
-      case "wordSets":
-      case "wordChains":
-        return renderItemList(items, "word");
-
-      case "morphemeWordSets":
-        return renderItemList(items, "word");
-
-      case "sentences":
-        return renderItemList(items, "sentence");
-
-      case "trickyWords":
-        return renderItemList(items);
-
-      default:
-        return <p>Unsupported field</p>;
-    }
-  };
-
   function renderItemList<T>(items: T[], displayKey?: string) {
     return (
-      <>
+      <GameItemsContainer>
         {items.map((item, index) => (
           <GameDataItem
             key={index}
@@ -76,15 +44,37 @@ export default function GameData({
             }
           />
         )}
-      </>
+      </GameItemsContainer>
     );
   }
 
-  return <GameDataContainer>{renderField()}</GameDataContainer>;
-}
+  if (!items || !Array.isArray(items)) {
+    return <p>No data available</p>;
+  }
 
-const GameDataContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-`;
+  switch (fieldName) {
+    case "newCode":
+    case "cumulativeCode":
+      return renderItemList(items, "spelling");
+
+    case "newMorphemes":
+    case "cumulativeMorphemes":
+      return renderItemList(items, "morpheme");
+
+    case "wordSets":
+    case "wordChains":
+      return renderItemList(items, "word");
+
+    case "morphemeWordSets":
+      return renderItemList(items, "word");
+
+    case "sentences":
+      return renderItemList(items, "sentence");
+
+    case "trickyWords":
+      return renderItemList(items);
+
+    default:
+      return <p>Unsupported field</p>;
+  }
+}

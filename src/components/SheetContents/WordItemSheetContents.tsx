@@ -6,8 +6,8 @@ import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
 import { Checkbox } from "../ui/checkbox";
 import { X } from "lucide-react";
-import styled from "styled-components";
 import NestedCodeSheet from "../NestedCodeSheet";
+import GameItemsContainer from "../GameItemsContainer";
 
 interface WordItemSheetContentsProps {
   updatedWordItem: WordItem | null;
@@ -56,7 +56,7 @@ export default function WordItemSheetContents({
           <Label htmlFor="code" className="mt-4">
             Code
           </Label>
-          <CodeContainer className="mt-2">
+          <GameItemsContainer className="mt-2">
             {updatedWordItem.phonemes.map((code, index) => (
               <NestedCodeSheet
                 key={index}
@@ -83,7 +83,7 @@ export default function WordItemSheetContents({
             >
               <GameDataItem value="+" />
             </NestedCodeSheet>
-          </CodeContainer>
+          </GameItemsContainer>
 
           <Label htmlFor="example" className="mt-4">
             Example
@@ -163,9 +163,3 @@ export default function WordItemSheetContents({
     </>
   );
 }
-
-const CodeContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-`;
