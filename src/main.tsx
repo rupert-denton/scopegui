@@ -8,6 +8,7 @@ import MainView from "./views/MainView.tsx";
 import ErrorView from "./views/ErrorView.tsx";
 import { GameDataSheetProvider } from "./hooks/GameDataSheetContext.tsx";
 import GameDataSheet from "./components/GameDataSheet.tsx";
+import { TooltipProvider } from "./components/ui/tooltip.tsx";
 
 const router = createBrowserRouter([
   {
@@ -27,9 +28,11 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <GameDataSheetProvider>
       <ScopeAndSequenceProvider>
-        <GameDataSheet>
-          <RouterProvider router={router} />
-        </GameDataSheet>
+        <TooltipProvider>
+          <GameDataSheet>
+            <RouterProvider router={router} />
+          </GameDataSheet>
+        </TooltipProvider>
       </ScopeAndSequenceProvider>
     </GameDataSheetProvider>
   </StrictMode>

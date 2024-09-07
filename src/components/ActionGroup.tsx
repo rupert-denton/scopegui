@@ -1,10 +1,11 @@
 import styled, { keyframes } from "styled-components";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { Plus, RefreshCcw } from "lucide-react";
+import { Info, Plus, RefreshCcw } from "lucide-react";
 import useScopeAndSequence from "@/hooks/useScopeAndSequence";
 import { reassignCumulativeItems } from "@/utils";
 import NewLevelDialog from "./SheetContents/NewLevelDialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function ActionGroup() {
   const { updatedScopeAndSequence, setUpdatedData } = useScopeAndSequence();
@@ -34,6 +35,17 @@ export default function ActionGroup() {
       >
         <SpinningIcon size={16} className={isSpinning ? "spinning" : ""} />
         Reassign Cumulative Items
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Info size={14} />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>
+              Cumulative items will be reassigned automatically <br />
+              when you add a level, otherwise use this button.
+            </p>
+          </TooltipContent>
+        </Tooltip>
       </Button>
     </ActionGroupContainer>
   );
