@@ -18,7 +18,11 @@ import {
   SentenceItem,
   WordItem,
 } from "@/model";
-import { getNextId } from "@/utils";
+import {
+  assignLevelNumbers,
+  getNextId,
+  reassignCumulativeItems,
+} from "@/utils";
 import { useState } from "react";
 import styled from "styled-components";
 import { Label } from "../ui/label";
@@ -33,7 +37,7 @@ interface NewLevelDialogProps {
   children?: React.ReactNode;
 }
 export default function NewLevelDialog({ children }: NewLevelDialogProps) {
-  const { updatedScopeAndSequence } = useScopeAndSequence();
+  const { updatedScopeAndSequence, setUpdatedData } = useScopeAndSequence();
   const [newLevel, setNewLevel] = useState<ScopeAndSequenceLevel>({
     id: getNextId(updatedScopeAndSequence?.data || []),
     level: (updatedScopeAndSequence?.data.length || 0) + 1,
@@ -55,7 +59,16 @@ export default function NewLevelDialog({ children }: NewLevelDialogProps) {
   });
 
   function handleSave() {
-    console.log("Save new level...");
+    if (!updatedScopeAndSequence) return;
+
+    const updatedData = updatedScopeAndSequence.data.reduce((acc, level) => {
+      if (level.level === newLevel.level) {
+        return [...acc, newLevel, level];
+      }
+      return [...acc, level];
+    }, [] as ScopeAndSequenceLevel[]);
+
+    setUpdatedData(reassignCumulativeItems(assignLevelNumbers(updatedData)));
   }
 
   return (
