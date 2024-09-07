@@ -5,11 +5,15 @@ import { CSS } from "@dnd-kit/utilities";
 import { CaretRight, DotsSixVertical } from "@phosphor-icons/react";
 import { useState } from "react";
 import LevelContent from "./LevelContent";
+import useScopeAndSequence from "@/hooks/useScopeAndSequence";
+import { assignLevelNumbers, reassignCumulativeItems } from "@/utils";
+import { Trash2 } from "lucide-react";
 
 interface LevelProps {
   levelData: ScopeAndSequenceLevel;
 }
 export default function Level({ levelData }: LevelProps) {
+  const { updatedScopeAndSequence, setUpdatedData } = useScopeAndSequence();
   const [open, setOpen] = useState(false);
   const {
     attributes,
@@ -26,6 +30,20 @@ export default function Level({ levelData }: LevelProps) {
     opacity: isDragging ? 0.5 : 1,
   };
 
+  function handleDeleteLevel() {
+    if (!updatedScopeAndSequence) return;
+    if (
+      window.confirm(
+        `Are you sure you want to delete Level ${levelData.level}?`
+      )
+    ) {
+      const updatedData = [...updatedScopeAndSequence.data].filter(
+        (level) => level.id !== levelData.id
+      );
+      setUpdatedData(reassignCumulativeItems(assignLevelNumbers(updatedData)));
+    }
+  }
+
   return (
     <LevelContainer ref={setNodeRef} style={style}>
       <ControlsContainer>
@@ -37,8 +55,15 @@ export default function Level({ levelData }: LevelProps) {
         />
       </ControlsContainer>
       <LevelHeader>
-        Level {levelData.level} - {levelData.levelInfo}{" "}
-        <em>(Level ID: {levelData.id})</em>
+        <span>
+          Level {levelData.level} - {levelData.levelInfo}{" "}
+          <em>(Level ID: {levelData.id})</em>
+        </span>
+        {open && (
+          <div className="mr-4 cursor-pointer" onClick={handleDeleteLevel}>
+            <Trash2 size={20} color={"hsl(var(--destructive))"} />
+          </div>
+        )}
       </LevelHeader>
       {open && <LevelContent levelData={levelData} />}
     </LevelContainer>
@@ -80,6 +105,8 @@ const Chevron = styled(CaretRight)`
 `;
 
 const LevelHeader = styled.div`
-  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-left: 4rem;
 `;

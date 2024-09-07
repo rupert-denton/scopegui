@@ -41,8 +41,8 @@ export default function ActionGroup() {
           </TooltipTrigger>
           <TooltipContent>
             <p>
-              Cumulative items will be reassigned automatically <br />
-              when you add a level, otherwise use this button.
+              Cumulative items will be reassigned automatically when <br />
+              you add or remove a level, otherwise use this button.
             </p>
           </TooltipContent>
         </Tooltip>
