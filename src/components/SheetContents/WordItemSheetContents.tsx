@@ -1,6 +1,6 @@
 import { Code, WordItem } from "@/lib/model";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
-import { SheetContentContainer } from "../StyledComponents";
+import { ContentWrapper, SheetContentContainer } from "../StyledComponents";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
@@ -56,34 +56,36 @@ export default function WordItemSheetContents({
           <Label htmlFor="code" className="mt-4">
             Code
           </Label>
-          <GameItemsContainer className="mt-2">
-            {updatedWordItem.phonemes.map((code, index) => (
+          <ContentWrapper className="mt-2">
+            <GameItemsContainer>
+              {updatedWordItem.phonemes.map((code, index) => (
+                <NestedCodeSheet
+                  key={index}
+                  code={code}
+                  onSave={(updatedCode) =>
+                    updatedCode
+                      ? handleSaveCode(index, updatedCode)
+                      : handleDeleteCode(index)
+                  }
+                  showDeleteButton
+                >
+                  <GameDataItem value={code.spelling} />
+                </NestedCodeSheet>
+              ))}
               <NestedCodeSheet
-                key={index}
-                code={code}
-                onSave={(updatedCode) =>
-                  updatedCode
-                    ? handleSaveCode(index, updatedCode)
-                    : handleDeleteCode(index)
+                code={{ spelling: "", phoneme: [] }}
+                onSave={(newCode) =>
+                  newCode &&
+                  setUpdatedWordItem({
+                    ...updatedWordItem,
+                    phonemes: [...updatedWordItem.phonemes, newCode],
+                  })
                 }
-                showDeleteButton
               >
-                <GameDataItem value={code.spelling} />
+                <GameDataItem value="+" />
               </NestedCodeSheet>
-            ))}
-            <NestedCodeSheet
-              code={{ spelling: "", phoneme: [] }}
-              onSave={(newCode) =>
-                newCode &&
-                setUpdatedWordItem({
-                  ...updatedWordItem,
-                  phonemes: [...updatedWordItem.phonemes, newCode],
-                })
-              }
-            >
-              <GameDataItem value="+" />
-            </NestedCodeSheet>
-          </GameItemsContainer>
+            </GameItemsContainer>
+          </ContentWrapper>
 
           <Label htmlFor="example" className="mt-4">
             Example

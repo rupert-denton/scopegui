@@ -23,6 +23,7 @@ import {
   getNextId,
   reassignCumulativeItems,
 } from "@/lib/utils";
+import { ContentWrapper } from "./StyledComponents";
 import { useState } from "react";
 import styled from "styled-components";
 import { Label } from "./ui/label";
@@ -293,10 +294,4 @@ const NewLevelFormContainer = styled(ScrollArea)`
   display: flex;
   flex-direction: column;
   max-height: 80vh;
-`;
-
-const ContentWrapper = styled.div`
-  padding: 1rem;
-  border: 1px solid hsl(var(--border));
-  border-radius: 0.5rem;
 `;

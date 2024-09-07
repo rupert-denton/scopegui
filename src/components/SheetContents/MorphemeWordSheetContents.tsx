@@ -4,7 +4,11 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
 import NestedMorphemeSheet from "../NestedMorphemeSheet";
-import { GameItemsContainer, SheetContentContainer } from "../StyledComponents";
+import {
+  ContentWrapper,
+  GameItemsContainer,
+  SheetContentContainer,
+} from "../StyledComponents";
 
 interface MorphemeWordSheetContentsProps {
   updatedMorphemeWord: MorphemeWord | null;
@@ -56,34 +60,36 @@ export default function MorphemeWordSheetContainer({
           <Label htmlFor="morphemes" className="mt-4">
             Morphemes
           </Label>
-          <GameItemsContainer className="mt-2">
-            {updatedMorphemeWord.morphemes.map((morpheme, index) => (
+          <ContentWrapper className="mt-2">
+            <GameItemsContainer>
+              {updatedMorphemeWord.morphemes.map((morpheme, index) => (
+                <NestedMorphemeSheet
+                  key={index}
+                  morpheme={morpheme}
+                  onSave={(updatedMorpheme) =>
+                    updatedMorpheme
+                      ? handleSaveMorpheme(index, updatedMorpheme)
+                      : handleDeleteMorpheme(index)
+                  }
+                  showDeleteButton
+                >
+                  <GameDataItem value={morpheme.morpheme} />
+                </NestedMorphemeSheet>
+              ))}
               <NestedMorphemeSheet
-                key={index}
-                morpheme={morpheme}
-                onSave={(updatedMorpheme) =>
-                  updatedMorpheme
-                    ? handleSaveMorpheme(index, updatedMorpheme)
-                    : handleDeleteMorpheme(index)
+                morpheme={{ morpheme: "", type: "base" }}
+                onSave={(newMorpheme) =>
+                  newMorpheme &&
+                  setUpdatedMorphemeWord({
+                    ...updatedMorphemeWord,
+                    morphemes: [...updatedMorphemeWord.morphemes, newMorpheme],
+                  })
                 }
-                showDeleteButton
               >
-                <GameDataItem value={morpheme.morpheme} />
+                <GameDataItem value="+" />
               </NestedMorphemeSheet>
-            ))}
-            <NestedMorphemeSheet
-              morpheme={{ morpheme: "", type: "base" }}
-              onSave={(newMorpheme) =>
-                newMorpheme &&
-                setUpdatedMorphemeWord({
-                  ...updatedMorphemeWord,
-                  morphemes: [...updatedMorphemeWord.morphemes, newMorpheme],
-                })
-              }
-            >
-              <GameDataItem value="+" />
-            </NestedMorphemeSheet>
-          </GameItemsContainer>
+            </GameItemsContainer>
+          </ContentWrapper>
 
           <Label htmlFor="example" className="mt-4">
             Example
