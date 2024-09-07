@@ -1,4 +1,4 @@
-import { Code } from "@/model";
+import { Code } from "@/lib/model";
 import {
   Sheet,
   SheetClose,

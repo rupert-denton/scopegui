@@ -1,4 +1,4 @@
-import { Morpheme } from "@/model";
+import { Morpheme } from "@/lib/model";
 import {
   Sheet,
   SheetClose,

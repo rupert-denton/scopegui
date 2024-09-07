@@ -1,4 +1,4 @@
-import { Code, WordItem } from "@/model";
+import { Code, WordItem } from "@/lib/model";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
 import SheetContentContainer from "./SheetContentContainer";
 import { Label } from "../ui/label";

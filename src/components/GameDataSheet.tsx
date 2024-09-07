@@ -1,4 +1,10 @@
-import { Code, Morpheme, MorphemeWord, SentenceItem, WordItem } from "@/model";
+import {
+  Code,
+  Morpheme,
+  MorphemeWord,
+  SentenceItem,
+  WordItem,
+} from "@/lib/model";
 import {
   Sheet,
   SheetClose,

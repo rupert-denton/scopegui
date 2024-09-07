@@ -1,4 +1,4 @@
-import { SentenceItem } from "@/model";
+import { SentenceItem } from "@/lib/model";
 import { SheetDescription, SheetTitle } from "../ui/sheet";
 import SheetContentContainer from "./SheetContentContainer";
 import { Label } from "../ui/label";

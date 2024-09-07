@@ -1,4 +1,4 @@
-import { Morpheme, MorphemeWord } from "@/model";
+import { Morpheme, MorphemeWord } from "@/lib/model";
 import { SheetTitle, SheetDescription } from "../ui/sheet";
 import SheetContentContainer from "./SheetContentContainer";
 import { Label } from "../ui/label";
