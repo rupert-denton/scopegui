@@ -57,10 +57,11 @@ export default function GameData({
             fieldName={fieldName}
             item={item}
             onItemChange={(newItem) =>
-              newItem &&
-              onItemsChange(
-                items.map((i, iIndex) => (iIndex === index ? newItem : i))
-              )
+              newItem
+                ? onItemsChange(
+                    items.map((i, iIndex) => (iIndex === index ? newItem : i))
+                  )
+                : onItemsChange(items.filter((_, iIndex) => iIndex !== index))
             }
           />
         ))}
