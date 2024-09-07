@@ -1,7 +1,8 @@
-import { ScopeAndSequenceLevel } from "../lib/model";
+import { Code, ScopeAndSequenceLevel } from "../lib/model";
 import GameDataItem from "./GameDataItem";
 import { createGameItem } from "@/lib/utils";
 import { GameItemsContainer } from "./StyledComponents";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface GameDataProps {
   fieldName: keyof ScopeAndSequenceLevel;
@@ -19,20 +20,42 @@ export default function GameData({
     return (
       <GameItemsContainer>
         {items.map((item, index) => (
-          <GameDataItem
-            key={index}
-            value={(displayKey ? item[displayKey as keyof T] : item) as string}
-            fieldName={fieldName}
-            item={item}
-            onItemChange={(newItem) =>
-              newItem
-                ? onItemsChange(
-                    items.map((i, iIndex) => (iIndex === index ? newItem : i))
-                  )
-                : onItemsChange(items.filter((_, iIndex) => iIndex !== index))
-            }
-            showDeleteButton
-          />
+          <Tooltip>
+            <TooltipTrigger>
+              <GameDataItem
+                key={index}
+                value={
+                  (displayKey ? item[displayKey as keyof T] : item) as string
+                }
+                fieldName={fieldName}
+                item={item}
+                onItemChange={(newItem) =>
+                  newItem
+                    ? onItemsChange(
+                        items.map((i, iIndex) =>
+                          iIndex === index ? newItem : i
+                        )
+                      )
+                    : onItemsChange(
+                        items.filter((_, iIndex) => iIndex !== index)
+                      )
+                }
+                showDeleteButton
+              />
+            </TooltipTrigger>
+            {(fieldName === "newCode" || fieldName === "cumulativeCode") && (
+              <TooltipContent>
+                <div className="flex items-center gap-1">
+                  {(Array.isArray((item as Code).phoneme)
+                    ? ((item as Code).phoneme as string[])
+                    : [(item as Code).phoneme]
+                  ).map((phoneme, index) => (
+                    <div key={index}>/{phoneme}/</div>
+                  ))}
+                </div>
+              </TooltipContent>
+            )}
+          </Tooltip>
         ))}
         {showAddButton && (
           <GameDataItem

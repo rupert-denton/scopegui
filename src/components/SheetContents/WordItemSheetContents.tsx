@@ -8,6 +8,7 @@ import { Checkbox } from "../ui/checkbox";
 import { X } from "lucide-react";
 import NestedCodeSheet from "../NestedCodeSheet";
 import { GameItemsContainer } from "../StyledComponents";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface WordItemSheetContentsProps {
   updatedWordItem: WordItem | null;
@@ -69,7 +70,19 @@ export default function WordItemSheetContents({
                   }
                   showDeleteButton
                 >
-                  <GameDataItem value={code.spelling} />
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <GameDataItem value={code.spelling} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {(Array.isArray(code.phoneme)
+                        ? code.phoneme
+                        : [code.phoneme]
+                      ).map((phoneme, index) => (
+                        <div key={index}>/{phoneme}/</div>
+                      ))}
+                    </TooltipContent>
+                  </Tooltip>
                 </NestedCodeSheet>
               ))}
               <NestedCodeSheet
