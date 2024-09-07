@@ -68,13 +68,11 @@ const VersionLabel = styled.div`
 
   span:first-child {
     font-weight: 500;
-    justify-content: flex-end;
   }
 
   span {
     display: flex;
     align-items: center;
-    width: 50%;
     gap: 0.25rem;
   }
 `;
