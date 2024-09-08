@@ -55,7 +55,7 @@ export default function WordItemSheetContents({
           />
 
           <Label htmlFor="code" className="mt-4">
-            Code
+            Phonemes
           </Label>
           <ContentWrapper className="mt-2">
             <GameItemsContainer>
