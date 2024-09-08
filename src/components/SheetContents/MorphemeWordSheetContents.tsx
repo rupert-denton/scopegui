@@ -38,8 +38,8 @@ export default function MorphemeWordSheetContainer({
 
   return (
     <>
-      <SheetTitle>Word Item</SheetTitle>
-      <SheetDescription>Edit a word item.</SheetDescription>
+      <SheetTitle>Morpheme Word</SheetTitle>
+      <SheetDescription>Edit a morpheme word.</SheetDescription>
       {updatedMorphemeWord && (
         <SheetContentContainer>
           <Label htmlFor="word" className="mt-4">
