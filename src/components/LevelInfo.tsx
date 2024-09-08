@@ -57,7 +57,7 @@ export default function LevelInfo({
     );
   } else if (fieldName === "extra") {
     return (
-      <GameItemsContainer>
+      <GameItemsContainer className="min-h-12">
         {(Array.isArray(value) ? value : [value]).map((v, index) => (
           <GameDataItem
             key={index}
