@@ -13,10 +13,14 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 interface WordItemSheetContentsProps {
   updatedWordItem: WordItem | null;
   setUpdatedWordItem: (wordItem: WordItem | null) => void;
+  newSyllable: string;
+  setNewSyllable: (syllable: string) => void;
 }
 export default function WordItemSheetContents({
   updatedWordItem,
   setUpdatedWordItem,
+  newSyllable,
+  setNewSyllable,
 }: WordItemSheetContentsProps) {
   function handleSaveCode(index: number, updatedCode: Code) {
     if (!updatedWordItem) return;
@@ -148,16 +152,20 @@ export default function WordItemSheetContents({
           ))}
           <Input
             className="mt-2"
-            value=""
+            value={newSyllable}
             placeholder="Add a syllable"
-            onChange={(e) =>
-              setUpdatedWordItem({
-                ...updatedWordItem,
-                syllables: updatedWordItem.syllables
-                  ? [...updatedWordItem.syllables, e.target.value]
-                  : [e.target.value],
-              })
-            }
+            onChange={(e) => setNewSyllable(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                setUpdatedWordItem({
+                  ...updatedWordItem,
+                  syllables: updatedWordItem.syllables
+                    ? [...updatedWordItem.syllables, newSyllable]
+                    : [newSyllable],
+                });
+                setNewSyllable("");
+              }
+            }}
           />
 
           <div className="flex items-center gap-2 mt-4 mb-2">

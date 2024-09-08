@@ -42,13 +42,39 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
     setShowDeleteButton,
   } = useGameDataSheet();
   const [updatedItem, setUpdatedItem] = useState<unknown>(null);
+  const [newSyllable, setNewSyllable] = useState<string>("");
+  const [newWord, setNewWord] = useState<string>("");
 
   function handleDelete() {
     if (onItemChange) onItemChange(null);
   }
 
   function handleSave() {
-    if (updatedItem && onItemChange) onItemChange(updatedItem);
+    let updatedItemCopy = updatedItem;
+    if (fieldName === "wordSets" || fieldName === "wordChains") {
+      if (newSyllable) {
+        const updatedWordItem = updatedItem as WordItem;
+        updatedItemCopy = {
+          ...(updatedWordItem as WordItem),
+          syllables: updatedWordItem.syllables
+            ? [...updatedWordItem.syllables, newSyllable]
+            : [newSyllable],
+        };
+        setNewSyllable("");
+      }
+    } else if (fieldName === "sentences") {
+      if (newWord) {
+        const updatedSentenceItem = updatedItem as SentenceItem;
+        updatedItemCopy = {
+          ...updatedSentenceItem,
+          words: updatedSentenceItem.words
+            ? [...updatedSentenceItem.words, newWord]
+            : [newWord],
+        };
+        setNewWord("");
+      }
+    }
+    if (updatedItem && onItemChange) onItemChange(updatedItemCopy);
   }
 
   function renderSheetContents(item: unknown) {
@@ -79,6 +105,8 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
           <WordItemSheetContents
             updatedWordItem={updatedItem as WordItem}
             setUpdatedWordItem={setUpdatedItem}
+            newSyllable={newSyllable}
+            setNewSyllable={setNewSyllable}
           />
         );
 
@@ -95,6 +123,8 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
           <SentenceSheetContents
             updatedSentence={updatedItem as SentenceItem}
             setUpdatedSentence={setUpdatedItem}
+            newWord={newWord}
+            setNewWord={setNewWord}
           />
         );
 

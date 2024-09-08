@@ -8,10 +8,14 @@ import { X } from "lucide-react";
 interface SentenceSheetContentsProps {
   updatedSentence: SentenceItem | null;
   setUpdatedSentence: (sentence: SentenceItem | null) => void;
+  newWord: string;
+  setNewWord: (word: string) => void;
 }
 export default function SentenceSheetContents({
   updatedSentence,
   setUpdatedSentence,
+  newWord,
+  setNewWord,
 }: SentenceSheetContentsProps) {
   return (
     <>
@@ -67,16 +71,20 @@ export default function SentenceSheetContents({
           ))}
           <Input
             className="mt-2"
-            value=""
+            value={newWord}
             placeholder="Add a word"
-            onChange={(e) =>
-              setUpdatedSentence({
-                ...updatedSentence,
-                words: updatedSentence.words
-                  ? [...updatedSentence.words, e.target.value]
-                  : [e.target.value],
-              })
-            }
+            onChange={(e) => setNewWord(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                setUpdatedSentence({
+                  ...updatedSentence,
+                  words: updatedSentence.words
+                    ? [...updatedSentence.words, newWord]
+                    : [newWord],
+                });
+                setNewWord("");
+              }
+            }}
           />
         </SheetContentContainer>
       )}
