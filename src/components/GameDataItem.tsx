@@ -1,4 +1,5 @@
 import useGameDataSheet from "@/hooks/useGameDataSheet";
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 interface GameDataItemProps {
@@ -8,36 +9,36 @@ interface GameDataItemProps {
   onItemChange?: (newItem: unknown) => void;
   showDeleteButton?: boolean;
 }
-export default function GameDataItem({
-  value,
-  fieldName,
-  item,
-  onItemChange,
-  showDeleteButton = false,
-}: GameDataItemProps) {
-  const {
-    setOpen,
-    setFieldName,
-    setItem,
-    setOnItemChange,
-    setShowDeleteButton,
-  } = useGameDataSheet();
+const GameDataItem = forwardRef<HTMLDivElement, GameDataItemProps>(
+  ({ value, fieldName, item, onItemChange, showDeleteButton = false }, ref) => {
+    const {
+      setOpen,
+      setFieldName,
+      setItem,
+      setOnItemChange,
+      setShowDeleteButton,
+    } = useGameDataSheet();
 
-  function handleClick() {
-    if (item === undefined || !fieldName || !onItemChange) return;
-    setFieldName(fieldName);
-    setItem(item);
-    setOnItemChange(() => onItemChange);
-    setShowDeleteButton(showDeleteButton);
-    setOpen(true);
+    function handleClick() {
+      if (item === undefined || !fieldName || !onItemChange) return;
+      setFieldName(fieldName);
+      setItem(item);
+      setOnItemChange(() => onItemChange);
+      setShowDeleteButton(showDeleteButton);
+      setOpen(true);
+    }
+
+    return (
+      <GameDataItemContainer ref={ref} onClick={handleClick}>
+        <GameDataItemValue>{value}</GameDataItemValue>
+      </GameDataItemContainer>
+    );
   }
+);
 
-  return (
-    <GameDataItemContainer onClick={handleClick}>
-      <GameDataItemValue>{value}</GameDataItemValue>
-    </GameDataItemContainer>
-  );
-}
+GameDataItem.displayName = "GameDataItem";
+
+export default GameDataItem;
 
 const GameDataItemContainer = styled.div`
   border: 1px solid #000;

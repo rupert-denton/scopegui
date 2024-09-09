@@ -75,7 +75,7 @@ export default function WordItemSheetContents({
                   showDeleteButton
                 >
                   <Tooltip>
-                    <TooltipTrigger>
+                    <TooltipTrigger asChild>
                       <GameDataItem value={code.spelling} />
                     </TooltipTrigger>
                     <TooltipContent>
