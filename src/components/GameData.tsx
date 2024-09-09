@@ -20,10 +20,9 @@ export default function GameData({
     return (
       <GameItemsContainer>
         {items.map((item, index) => (
-          <Tooltip>
+          <Tooltip key={index}>
             <TooltipTrigger>
               <GameDataItem
-                key={index}
                 value={
                   (displayKey ? item[displayKey as keyof T] : item) as string
                 }
