@@ -9,7 +9,6 @@ import {
   getNextId,
   reassignCumulativeItems,
 } from "@/lib/utils";
-// import NewLevelDialog from "./SheetContents/NewLevelDialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function ActionGroup() {
@@ -39,12 +38,10 @@ export default function ActionGroup() {
 
   return (
     <ActionGroupContainer>
-      {/* <NewLevelDialog> */}
       <Button variant="outline" className="gap-2" onClick={handleAddLevel}>
         <Plus size={16} />
         Add Level
       </Button>
-      {/* </NewLevelDialog> */}
       <Button
         variant="outline"
         className="gap-2"
