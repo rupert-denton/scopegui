@@ -32,6 +32,7 @@ export default function NestedMorphemeSheet({
         <MorphemeSheetContents
           updatedMorpheme={updatedMorpheme}
           setUpdatedMorpheme={setUpdatedMorpheme}
+          showPronunciation
         />
 
         <SheetFooter>

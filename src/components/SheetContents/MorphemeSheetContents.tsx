@@ -9,10 +9,12 @@ import { SelectValue } from "@radix-ui/react-select";
 interface MorphemeSheetContentsProps {
   updatedMorpheme: Morpheme | null;
   setUpdatedMorpheme: (morpheme: Morpheme) => void;
+  showPronunciation?: boolean;
 }
 export default function MorphemeSheetContents({
   updatedMorpheme,
   setUpdatedMorpheme,
+  showPronunciation,
 }: MorphemeSheetContentsProps) {
   return (
     <>
@@ -64,6 +66,7 @@ export default function MorphemeSheetContents({
               <Input
                 id="affixId"
                 className="mt-2"
+                placeholder="Affix ID"
                 value={updatedMorpheme.affixId || ""}
                 onChange={(e) =>
                   setUpdatedMorpheme({
@@ -83,11 +86,32 @@ export default function MorphemeSheetContents({
               <Input
                 id="baseId"
                 className="mt-2"
+                placeholder="Base ID"
                 value={updatedMorpheme.baseId || ""}
                 onChange={(e) =>
                   setUpdatedMorpheme({
                     ...updatedMorpheme,
                     baseId: parseInt(e.target.value),
+                  })
+                }
+              />
+            </>
+          )}
+
+          {showPronunciation && (
+            <>
+              <Label htmlFor="pronunciation" className="mt-4">
+                Pronunciation
+              </Label>
+              <Input
+                id="pronunciation"
+                className="mt-2"
+                placeholder="Pronunciation (if different from morpheme)"
+                value={updatedMorpheme.pronunciation || ""}
+                onChange={(e) =>
+                  setUpdatedMorpheme({
+                    ...updatedMorpheme,
+                    pronunciation: e.target.value || undefined,
                   })
                 }
               />
