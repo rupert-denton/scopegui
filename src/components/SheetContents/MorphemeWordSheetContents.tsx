@@ -9,6 +9,7 @@ import {
   GameItemsContainer,
   SheetContentContainer,
 } from "../StyledComponents";
+import MorphemeSelector from "../MorphemeSelector";
 
 interface MorphemeWordSheetContentsProps {
   updatedMorphemeWord: MorphemeWord | null;
@@ -76,18 +77,16 @@ export default function MorphemeWordSheetContainer({
                   <GameDataItem value={morpheme.morpheme} />
                 </NestedMorphemeSheet>
               ))}
-              <NestedMorphemeSheet
-                morpheme={{ morpheme: "", type: "base" }}
-                onSave={(newMorpheme) =>
-                  newMorpheme &&
+              <MorphemeSelector
+                onMorphemeSelected={(morpheme) =>
                   setUpdatedMorphemeWord({
                     ...updatedMorphemeWord,
-                    morphemes: [...updatedMorphemeWord.morphemes, newMorpheme],
+                    morphemes: [...updatedMorphemeWord.morphemes, morpheme],
                   })
                 }
               >
                 <GameDataItem value="+" />
-              </NestedMorphemeSheet>
+              </MorphemeSelector>
             </GameItemsContainer>
           </ContentWrapper>
 

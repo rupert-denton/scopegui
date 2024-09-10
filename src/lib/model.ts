@@ -32,9 +32,10 @@ export interface Code {
 
 export interface Morpheme {
   morpheme: string;
+  type: "base" | "prefix" | "suffix" | "connector";
   affixId?: number;
   baseId?: number;
-  type: "base" | "prefix" | "suffix" | "connector";
+  pronunciation?: string;
 }
 
 export interface WordItem {
