@@ -61,6 +61,9 @@ export default function MorphemeWordSheetContainer({
           <Label htmlFor="morphemes" className="mt-4">
             Morphemes
           </Label>
+          <p className="text-xs text-zinc-600">
+            (* means alternate pronunciation is set)
+          </p>
           <ContentWrapper className="mt-2">
             <GameItemsContainer>
               {updatedMorphemeWord.morphemes.map((morpheme, index) => (
@@ -74,7 +77,10 @@ export default function MorphemeWordSheetContainer({
                   }
                   showDeleteButton
                 >
-                  <GameDataItem value={morpheme.morpheme} />
+                  <GameDataItem
+                    value={morpheme.morpheme}
+                    alternatePronunciation={!!morpheme.pronunciation}
+                  />
                 </NestedMorphemeSheet>
               ))}
               <MorphemeSelector
