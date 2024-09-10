@@ -41,6 +41,7 @@ export default function LevelContent({ levelData }: LevelContentProps) {
               {gameDataFields.includes(key) ? (
                 <div className="min-h-12">
                   <GameData
+                    level={levelData.level}
                     fieldName={key as keyof ScopeAndSequenceLevel}
                     items={value}
                     onItemsChange={(newValue) =>
@@ -55,6 +56,7 @@ export default function LevelContent({ levelData }: LevelContentProps) {
                 </div>
               ) : (
                 <LevelInfo
+                  level={levelData.level}
                   levelId={levelData.id}
                   fieldName={key}
                   value={value}

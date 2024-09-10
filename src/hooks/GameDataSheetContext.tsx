@@ -4,6 +4,9 @@ interface GameDataSheetContextType {
   open: boolean;
   setOpen: (open: boolean) => void;
 
+  level: number | null;
+  setLevel: (level: number | null) => void;
+
   fieldName: string | null;
   setFieldName: (fieldName: string | null) => void;
 
@@ -29,6 +32,7 @@ export function GameDataSheetProvider({
   children,
 }: GameDataSheetProviderProps) {
   const [open, setOpen] = useState(false);
+  const [level, setLevel] = useState<number | null>(null);
   const [fieldName, setFieldName] = useState<string | null>(null);
   const [item, setItem] = useState<unknown>(null);
   const [onItemChange, setOnItemChange] = useState<
@@ -41,6 +45,8 @@ export function GameDataSheetProvider({
       value={{
         open,
         setOpen,
+        level,
+        setLevel,
         fieldName,
         setFieldName,
         item,

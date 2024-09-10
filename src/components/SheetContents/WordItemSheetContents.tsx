@@ -6,9 +6,11 @@ import { Input } from "../ui/input";
 import GameDataItem from "../GameDataItem";
 import { Checkbox } from "../ui/checkbox";
 import { X } from "lucide-react";
-import NestedCodeSheet from "../NestedCodeSheet";
 import { GameItemsContainer } from "../StyledComponents";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import CodeSelector from "../CodeSelector";
+import NestedCodeSheet from "../NestedCodeSheet";
+import { useState } from "react";
 
 interface WordItemSheetContentsProps {
   updatedWordItem: WordItem | null;
@@ -22,6 +24,8 @@ export default function WordItemSheetContents({
   newSyllable,
   setNewSyllable,
 }: WordItemSheetContentsProps) {
+  const [isCodeSelectorOpen, setCodeSelectorOpen] = useState(false);
+
   function handleSaveCode(index: number, updatedCode: Code) {
     if (!updatedWordItem) return;
     setUpdatedWordItem({
@@ -89,18 +93,22 @@ export default function WordItemSheetContents({
                   </Tooltip>
                 </NestedCodeSheet>
               ))}
-              <NestedCodeSheet
-                code={{ spelling: "", phoneme: [] }}
-                onSave={(newCode) =>
-                  newCode &&
+              <CodeSelector
+                open={isCodeSelectorOpen}
+                setOpen={setCodeSelectorOpen}
+                onCodeSelected={(code) => {
+                  console.log("code selected", code);
                   setUpdatedWordItem({
                     ...updatedWordItem,
-                    phonemes: [...updatedWordItem.phonemes, newCode],
-                  })
-                }
+                    phonemes: updatedWordItem.phonemes
+                      ? [...updatedWordItem.phonemes, code]
+                      : [code],
+                  });
+                  setCodeSelectorOpen(false);
+                }}
               >
                 <GameDataItem value="+" />
-              </NestedCodeSheet>
+              </CodeSelector>
             </GameItemsContainer>
           </ContentWrapper>
 

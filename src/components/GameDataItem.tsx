@@ -4,15 +4,20 @@ import styled from "styled-components";
 
 interface GameDataItemProps {
   value: string;
+  level?: number;
   fieldName?: string;
   item?: unknown;
   onItemChange?: (newItem: unknown) => void;
   showDeleteButton?: boolean;
 }
 const GameDataItem = forwardRef<HTMLDivElement, GameDataItemProps>(
-  ({ value, fieldName, item, onItemChange, showDeleteButton = false }, ref) => {
+  (
+    { value, level, fieldName, item, onItemChange, showDeleteButton = false },
+    ref
+  ) => {
     const {
       setOpen,
+      setLevel,
       setFieldName,
       setItem,
       setOnItemChange,
@@ -20,7 +25,8 @@ const GameDataItem = forwardRef<HTMLDivElement, GameDataItemProps>(
     } = useGameDataSheet();
 
     function handleClick() {
-      if (item === undefined || !fieldName || !onItemChange) return;
+      if (item === undefined || !level || !fieldName || !onItemChange) return;
+      setLevel(level);
       setFieldName(fieldName);
       setItem(item);
       setOnItemChange(() => onItemChange);

@@ -5,12 +5,14 @@ import { GameItemsContainer } from "./StyledComponents";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface GameDataProps {
+  level: number;
   fieldName: keyof ScopeAndSequenceLevel;
   items: unknown[];
   onItemsChange: (newValue: unknown[]) => void;
   showAddButton?: boolean;
 }
 export default function GameData({
+  level,
   fieldName,
   items,
   onItemsChange,
@@ -26,6 +28,7 @@ export default function GameData({
                 value={
                   (displayKey ? item[displayKey as keyof T] : item) as string
                 }
+                level={level}
                 fieldName={fieldName}
                 item={item}
                 onItemChange={(newItem) =>
@@ -59,6 +62,7 @@ export default function GameData({
         {showAddButton && (
           <GameDataItem
             value="+"
+            level={level}
             fieldName={fieldName}
             item={createGameItem(fieldName)}
             onItemChange={(newItem) =>

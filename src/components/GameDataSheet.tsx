@@ -32,6 +32,7 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
   const {
     open,
     setOpen,
+    setLevel,
     fieldName,
     setFieldName,
     item,
@@ -155,6 +156,7 @@ export default function GameDataSheet({ children }: GameDataSheetProps) {
       onOpenChange={(open) => {
         if (!open) {
           setOpen(false);
+          setLevel(null);
           setUpdatedItem(null);
           setItem(null);
           setFieldName(null);

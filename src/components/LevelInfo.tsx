@@ -7,12 +7,14 @@ import GameDataItem from "./GameDataItem";
 import { GameItemsContainer } from "./StyledComponents";
 
 interface LevelInfoProps {
+  level: number;
   levelId: number;
   fieldName: string;
   value: number | string | string[] | boolean;
   showAddButton?: boolean;
 }
 export default function LevelInfo({
+  level,
   levelId,
   fieldName,
   value,
@@ -62,6 +64,7 @@ export default function LevelInfo({
           <GameDataItem
             key={index}
             value={v as string}
+            level={level}
             fieldName="extra"
             item={v}
             onItemChange={(newValue) =>
@@ -73,6 +76,7 @@ export default function LevelInfo({
         {showAddButton && (
           <GameDataItem
             value="+"
+            level={level}
             fieldName={fieldName}
             item={""}
             onItemChange={(newItem) =>
