@@ -10,7 +10,6 @@ import { GameItemsContainer } from "../StyledComponents";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import CodeSelector from "../CodeSelector";
 import NestedCodeSheet from "../NestedCodeSheet";
-import { useState } from "react";
 
 interface WordItemSheetContentsProps {
   updatedWordItem: WordItem | null;
@@ -24,8 +23,6 @@ export default function WordItemSheetContents({
   newSyllable,
   setNewSyllable,
 }: WordItemSheetContentsProps) {
-  const [isCodeSelectorOpen, setCodeSelectorOpen] = useState(false);
-
   function handleSaveCode(index: number, updatedCode: Code) {
     if (!updatedWordItem) return;
     setUpdatedWordItem({
@@ -94,18 +91,14 @@ export default function WordItemSheetContents({
                 </NestedCodeSheet>
               ))}
               <CodeSelector
-                open={isCodeSelectorOpen}
-                setOpen={setCodeSelectorOpen}
-                onCodeSelected={(code) => {
-                  console.log("code selected", code);
+                onCodeSelected={(code) =>
                   setUpdatedWordItem({
                     ...updatedWordItem,
                     phonemes: updatedWordItem.phonemes
                       ? [...updatedWordItem.phonemes, code]
                       : [code],
-                  });
-                  setCodeSelectorOpen(false);
-                }}
+                  })
+                }
               >
                 <GameDataItem value="+" />
               </CodeSelector>

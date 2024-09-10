@@ -14,19 +14,17 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import GameDataItem from "./GameDataItem";
 import styled from "styled-components";
 import useGameDataSheet from "@/hooks/useGameDataSheet";
+import { useState } from "react";
 
 interface CodeSelectorProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
   onCodeSelected: (code: Code) => void;
   children?: React.ReactNode;
 }
 export default function CodeSelector({
-  open,
-  setOpen,
   onCodeSelected,
   children,
 }: CodeSelectorProps) {
+  const [open, setOpen] = useState(false);
   const { updatedScopeAndSequence } = useScopeAndSequence();
   const { level } = useGameDataSheet();
   const codeByLevel = (updatedScopeAndSequence?.data || []).map(
@@ -35,6 +33,7 @@ export default function CodeSelector({
 
   function handleCodeSelected(code: Code) {
     onCodeSelected(code);
+    setOpen(false);
   }
 
   return (
@@ -49,7 +48,7 @@ export default function CodeSelector({
               <LevelGroup
                 level={level}
                 codeForLevel={codeByLevel[level - 1]}
-                handleCodeSelected={handleCodeSelected}
+                onCodeSelected={handleCodeSelected}
                 isCurrent
               />
             ) : null}
@@ -60,7 +59,7 @@ export default function CodeSelector({
                   key={index}
                   level={index + 1}
                   codeForLevel={codeByLevel[index]}
-                  handleCodeSelected={handleCodeSelected}
+                  onCodeSelected={handleCodeSelected}
                 />
               );
             })}
@@ -74,13 +73,13 @@ export default function CodeSelector({
 interface LevelGroupProps {
   level: number;
   codeForLevel: Code[];
-  handleCodeSelected: (code: Code) => void;
+  onCodeSelected: (code: Code) => void;
   isCurrent?: boolean;
 }
 function LevelGroup({
   level,
   codeForLevel,
-  handleCodeSelected,
+  onCodeSelected,
   isCurrent,
 }: LevelGroupProps) {
   const getSearchKey = (code: Code) =>
@@ -94,7 +93,7 @@ function LevelGroup({
           {codeForLevel.map((code, index) => (
             <CommandItem key={index} value={getSearchKey(code)}>
               <Tooltip>
-                <TooltipTrigger onClick={() => handleCodeSelected(code)}>
+                <TooltipTrigger onClick={() => onCodeSelected(code)}>
                   <GameDataItem value={code.spelling} />
                 </TooltipTrigger>
                 <TooltipContent>
