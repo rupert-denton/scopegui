@@ -49,7 +49,9 @@ export default function MorphemeSheetContents({
             }
           >
             <SelectTrigger id="type" className="mt-2 w-full">
-              <SelectValue placeholder={updatedMorpheme.type} />
+              <SelectValue
+                placeholder={updatedMorpheme.type || "Select type..."}
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="base">Base</SelectItem>
