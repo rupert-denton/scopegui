@@ -26,6 +26,7 @@ export default function MorphemeSheetContents({
           <Input
             id="morpheme"
             className="mt-2"
+            placeholder="Morpheme"
             value={updatedMorpheme.morpheme}
             onChange={(e) =>
               setUpdatedMorpheme({
